@@ -1,0 +1,135 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─── Design tokens — Nature theme (default) ─── */
+:root {
+  --color-primary: #00668c;
+  --color-primary-50: 242 248 252;
+  --color-primary-100: 212 234 247;
+  --color-primary-200: 182 204 216;
+  --color-primary-300: 113 196 239;
+  --color-primary-400: 57 149 184;
+  --color-primary-500: 0 102 140;
+  --color-primary-600: 0 82 115;
+  --color-primary-700: 0 65 90;
+  --color-primary-800: 0 48 71;
+  --color-primary-900: 0 31 48;
+
+  --bg-app: #f0ece1;
+  --bg-surface: #fcf9f2;
+  --bg-subtle: #f5efe6;
+  --bg-muted: #ede8df;
+  --bg-elevated: #fdfaf4;
+  --border-default: #ece7de;
+  --border-subtle: #e5dfd4;
+  --text-primary: #1d1c1c;
+  --text-secondary: #4a3426;
+  --text-muted: #6d665f;
+  --text-placeholder: #736b62;
+  --bg-hover-row: #f5efe6;
+  --bg-stripe: #f8f5ec;
+
+  --shadow-card: 0 1px 2px 0 rgb(74 49 16 / 0.04), 0 1px 3px 0 rgb(74 49 16 / 0.06);
+  --shadow-card-hover: 0 8px 20px -4px rgb(74 49 16 / 0.1), 0 4px 8px -4px rgb(74 49 16 / 0.06);
+  --shadow-dropdown: 0 10px 15px -3px rgb(74 49 16 / 0.1), 0 4px 6px -4px rgb(74 49 16 / 0.06);
+}
+
+@layer base {
+  html,
+  body {
+    height: 100%;
+    background: var(--bg-app);
+    overflow-x: hidden;
+  }
+  body {
+    @apply font-sans text-ink antialiased;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+  /* Dynamic scale calculation for Zoom feature (defaulting to 1.0 for public website readability) */
+  #root {
+    zoom: var(--zoom-factor, 1.0);
+  }
+}
+
+@layer components {
+  .card {
+    @apply rounded-xl border border-border bg-surface shadow-card;
+  }
+  .th-cell {
+    @apply bg-subtle px-4 py-2.5 text-left text-2xs font-black uppercase tracking-wider text-ink-muted;
+  }
+  .td-cell {
+    @apply border-t border-border px-4 py-3 text-[13px];
+  }
+  .tr-hover {
+    @apply transition-colors hover:bg-[var(--bg-hover-row)];
+  }
+  .btn-primary {
+    @apply flex items-center gap-2 rounded-xl bg-primary-500 px-4 py-2 text-[13px] font-bold text-white shadow-card transition-all hover:bg-primary-600 hover:shadow-card-hover active:scale-95;
+  }
+}
+
+/* Scrollbars */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--scrollbar-thumb, #d6cfc4);
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--scrollbar-thumb-hover, #b8b0a3);
+}
+
+/* Hide scrollbar utility */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+/* Engineering blueprint grid background */
+.bg-engineering-grid {
+  background-image: 
+    linear-gradient(to right, var(--border-subtle) 1.2px, transparent 1.2px),
+    linear-gradient(to bottom, var(--border-subtle) 1.2px, transparent 1.2px);
+  background-size: 36px 36px;
+}
+
+/* Smooth scrolling news ticker marquee animation */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-marquee {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+  animation: marquee 150s linear infinite;
+}
+.animate-marquee-hover-pause:hover .animate-marquee {
+  animation-play-state: paused;
+}
+
+/* Partners & Customers Marquee */
+.animate-partner-marquee {
+  display: inline-flex !important;
+  flex-direction: row !important;
+  flex-wrap: nowrap !important;
+  align-items: center !important;
+  white-space: nowrap !important;
+  animation: marquee 25s linear infinite;
+}
+.animate-partner-marquee-hover-pause:hover .animate-partner-marquee {
+  animation-play-state: paused;
+}
+
