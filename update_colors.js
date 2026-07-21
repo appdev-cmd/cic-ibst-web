@@ -1,0 +1,14 @@
+const fs = require('fs');
+const file = 'src/components/Chatbot.tsx';
+let content = fs.readFileSync(file, 'utf8');
+content = content.replace(/violet-600/g, 'primary-500');
+content = content.replace(/violet-700/g, 'primary-600');
+content = content.replace(/indigo-600/g, 'primary-600');
+content = content.replace(/violet-200/g, 'primary-100');
+content = content.replace(/violet-100/g, 'primary-100');
+content = content.replace(/violet-400/g, 'primary-400');
+content = content.replace(/violet-500/g, 'primary-500');
+content = content.replace(/className="fixed bottom-6 right-6 p-4/g, 'className="fixed bottom-6 right-6 p-4 cursor-pointer');
+content = content.replace(/rounded-md transition-colors"/g, 'rounded-md transition-colors cursor-pointer"');
+content = content.replace(/rounded-lg transition-colors/g, 'rounded-lg transition-colors cursor-pointer');
+fs.writeFileSync(file, content);
