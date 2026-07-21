@@ -747,26 +747,157 @@ export default function App() {
             </div>
           </div>
 
-          {/* Ngôn ngữ */}
-          <div className="flex items-center gap-1 bg-muted p-1 rounded-lg border border-border">
+          {/* Ngôn ngữ & Cài đặt */}
+          <div className="flex items-center gap-2 relative">
+            <div className="flex items-center gap-1 bg-muted p-1 rounded-lg border border-border">
+              <button
+                onClick={() => setLang('vi')}
+                title="Tiếng Việt"
+                className={cn(
+                  "p-1 rounded-md transition-all cursor-pointer flex items-center justify-center",
+                  lang === 'vi' ? "bg-surface shadow-sm ring-1 ring-border" : "opacity-60 hover:opacity-100"
+                )}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" className="w-5 h-3.5 rounded-sm">
+                  <rect fill="#da251d" width="900" height="600"/>
+                  <polygon fill="#ffcd00" points="450,120 521,338 335,203 565,203 379,338"/>
+                </svg>
+              </button>
+              <button
+                onClick={() => setLang('en')}
+                title="English"
+                className={cn(
+                  "p-1 rounded-md transition-all cursor-pointer flex items-center justify-center",
+                  lang === 'en' ? "bg-surface shadow-sm ring-1 ring-border" : "opacity-60 hover:opacity-100"
+                )}
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" className="w-5 h-3.5 rounded-sm">
+                  <clipPath id="t"><path d="M30,15 h30 v15 z v-15 h-30 z h-30 v-15 z v15 h30 z"/></clipPath>
+                  <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
+                  <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" strokeWidth="6"/>
+                  <path d="M0,0 L60,30 M60,0 L0,30" clipPath="url(#t)" stroke="#C8102E" strokeWidth="4"/>
+                  <path d="M30,0 v30 M0,15 h60" stroke="#fff" strokeWidth="10"/>
+                  <path d="M30,0 v30 M0,15 h60" stroke="#C8102E" strokeWidth="6"/>
+                </svg>
+              </button>
+            </div>
+
+            {/* Cài đặt hiển thị */}
             <button
-              onClick={() => setLang('vi')}
+              onClick={() => setSettingsOpen(!settingsOpen)}
+              title="Cài đặt hiển thị"
               className={cn(
-                "px-3 py-1 text-2xs font-extrabold rounded-md transition-all cursor-pointer",
-                lang === 'vi' ? "bg-surface text-primary shadow-sm" : "text-ink-muted hover:text-ink"
+                "w-8 h-8 rounded-full flex items-center justify-center transition-all cursor-pointer border",
+                settingsOpen 
+                  ? "bg-primary-500 text-white border-primary-500 shadow-md" 
+                  : "bg-surface text-ink-secondary border-border hover:bg-muted hover:text-ink"
               )}
             >
-              Tiếng Việt
+              <Settings size={16} className={cn("transition-transform duration-300", settingsOpen && "rotate-45")} />
             </button>
-            <button
-              onClick={() => setLang('en')}
-              className={cn(
-                "px-3 py-1 text-2xs font-extrabold rounded-md transition-all cursor-pointer",
-                lang === 'en' ? "bg-surface text-primary shadow-sm" : "text-ink-muted hover:text-ink"
-              )}
-            >
-              English
-            </button>
+
+            {settingsOpen && (
+              <div className="absolute right-0 top-11 w-64 p-4 bg-surface border border-border rounded-xl shadow-dropdown text-left space-y-4 animate-fade-in z-50">
+                <div className="pb-2 border-b border-border-subtle flex justify-between items-center">
+                  <span className="text-xs font-black text-ink">Cài đặt giao diện</span>
+                  <span className="text-3xs text-primary-500 font-bold">Public Web</span>
+                </div>
+
+                {/* Theme Select */}
+                <div className="space-y-1.5">
+                  <span className="text-2xs font-semibold text-ink-secondary">Giao diện nền</span>
+                  <div className="flex gap-1 bg-muted p-0.5 rounded-lg">
+                    <button
+                      onClick={() => setTheme('light')}
+                      className={cn(
+                        "flex-1 py-1 text-3xs font-bold rounded-md flex items-center justify-center gap-1 cursor-pointer transition-all",
+                        theme === 'light' ? "bg-surface text-primary shadow-sm" : "text-ink-muted hover:text-ink"
+                      )}
+                    >
+                      <Sun size={11} /> Sáng
+                    </button>
+                    <button
+                      onClick={() => setTheme('nature')}
+                      className={cn(
+                        "flex-1 py-1 text-3xs font-bold rounded-md flex items-center justify-center gap-1 cursor-pointer transition-all",
+                        theme === 'nature' ? "bg-surface text-primary shadow-sm" : "text-ink-muted hover:text-ink"
+                      )}
+                    >
+                      <Leaf size={11} /> Bảo vệ
+                    </button>
+                    <button
+                      onClick={() => setTheme('dark')}
+                      className={cn(
+                        "flex-1 py-1 text-3xs font-bold rounded-md flex items-center justify-center gap-1 cursor-pointer transition-all",
+                        theme === 'dark' ? "bg-surface text-primary shadow-sm" : "text-ink-muted hover:text-ink"
+                      )}
+                    >
+                      <Moon size={11} /> Tối
+                    </button>
+                  </div>
+                </div>
+
+                {/* Primary Colors */}
+                <div className="space-y-1.5">
+                  <span className="text-2xs font-semibold text-ink-secondary">Màu sắc chủ đạo</span>
+                  <div className="grid grid-cols-5 gap-1.5 bg-muted p-1.5 rounded-lg justify-items-center">
+                    {PRIMARY_COLORS.map(({ id, name, hex }) => {
+                      const active = primaryColor === id;
+                      return (
+                        <button
+                          key={id}
+                          onClick={() => setPrimaryColor(id)}
+                          title={name}
+                          className={cn(
+                            "w-5 h-5 rounded-full flex items-center justify-center transition-transform hover:scale-110 cursor-pointer",
+                            active && "ring-1 ring-offset-1 ring-offset-surface"
+                          )}
+                          style={{ background: hex }}
+                        >
+                          {active && <Check size={10} className="text-white" strokeWidth={3} />}
+                        </button>
+                      );
+                    })}
+                  </div>
+                </div>
+
+                {/* Zoom Control */}
+                <div className="space-y-1.5">
+                  <div className="flex justify-between items-center text-2xs font-semibold text-ink-secondary">
+                    <span>Tỷ lệ hiển thị</span>
+                    <span className="font-bold text-primary-500">{zoom}%</span>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => setZoom(Math.max(100, zoom - 10))}
+                      disabled={zoom <= 100}
+                      className="w-6 h-6 flex items-center justify-center rounded-lg border border-border bg-subtle hover:bg-muted text-xs font-bold disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                    >
+                      <ZoomOut size={10} />
+                    </button>
+                    <input
+                      type="range"
+                      min="100"
+                      max="200"
+                      step="10"
+                      value={zoom}
+                      onChange={(e) => setZoom(Number(e.target.value))}
+                      className="flex-1 h-1 bg-muted rounded-lg appearance-none cursor-pointer accent-[var(--color-primary)] focus:outline-none"
+                      style={{
+                        background: `linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) ${zoom - 100}%, var(--bg-muted) ${zoom - 100}%, var(--bg-muted) 100%)`
+                      }}
+                    />
+                    <button
+                      onClick={() => setZoom(Math.min(200, zoom + 10))}
+                      disabled={zoom >= 200}
+                      className="w-6 h-6 flex items-center justify-center rounded-lg border border-border bg-subtle hover:bg-muted text-xs font-bold disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                    >
+                      <ZoomIn size={10} />
+                    </button>
+                  </div>
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>
