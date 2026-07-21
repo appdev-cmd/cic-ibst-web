@@ -3272,7 +3272,7 @@ export default function App() {
       </footer>
 
       {/* ─── FLOATING DISPLAY SETTINGS WIDGET ─── */}
-      <div className="fixed bottom-4 right-4 z-50">
+      <div className="fixed top-28 right-4 z-50">
         <button
           onClick={() => setSettingsOpen(!settingsOpen)}
           title="Cài đặt hiển thị"
@@ -3282,7 +3282,7 @@ export default function App() {
         </button>
 
         {settingsOpen && (
-          <div className="absolute right-0 bottom-12 w-64 p-4 bg-surface border border-border rounded-xl shadow-dropdown text-left space-y-4 animate-fade-in">
+          <div className="absolute right-0 top-12 w-64 p-4 bg-surface border border-border rounded-xl shadow-dropdown text-left space-y-4 animate-fade-in">
             <div className="pb-2 border-b border-border-subtle flex justify-between items-center">
               <span className="text-xs font-black text-ink">Cài đặt giao diện</span>
               <span className="text-3xs text-primary-500 font-bold">Public Web</span>
