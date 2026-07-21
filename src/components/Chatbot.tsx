@@ -71,7 +71,7 @@ export const Chatbot: React.FC = () => {
     return (
       <button
         onClick={() => setIsOpen(true)}
-        className="fixed bottom-6 right-6 p-4 bg-violet-600 text-white rounded-full shadow-xl hover:bg-violet-700 hover:scale-105 transition-all duration-300 z-50 group flex items-center justify-center"
+        className="fixed bottom-6 right-6 p-4 cursor-pointer bg-primary-500 text-white rounded-full shadow-xl hover:bg-primary-600 hover:scale-105 transition-all duration-300 z-50 group flex items-center justify-center"
         aria-label="Open Chatbot"
       >
         <MessageSquare className="w-6 h-6" />
@@ -91,7 +91,7 @@ export const Chatbot: React.FC = () => {
     >
       {/* Header */}
       <div 
-        className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-violet-600 to-indigo-600 text-white cursor-pointer select-none" 
+        className="flex items-center justify-between px-4 py-3 bg-gradient-to-r from-primary-500 to-primary-600 text-white cursor-pointer select-none" 
         onClick={() => setIsMinimized(!isMinimized)}
       >
         <div className="flex items-center gap-3">
@@ -99,23 +99,23 @@ export const Chatbot: React.FC = () => {
             <div className="w-8 h-8 bg-white/20 rounded-full flex items-center justify-center">
               <Bot className="w-5 h-5 text-white" />
             </div>
-            <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-400 border-2 border-indigo-600 rounded-full"></div>
+            <div className="absolute bottom-0 right-0 w-2.5 h-2.5 bg-green-400 border-2 border-primary-600 rounded-full"></div>
           </div>
           <div>
             <h3 className="font-semibold text-sm">AI Assistant</h3>
-            <p className="text-xs text-violet-200">Trực tuyến</p>
+            <p className="text-xs text-primary-100">Trực tuyến</p>
           </div>
         </div>
         <div className="flex items-center gap-1">
           <button 
             onClick={(e) => { e.stopPropagation(); setIsMinimized(!isMinimized); }}
-            className="p-1.5 text-violet-200 hover:text-white hover:bg-white/20 rounded-md transition-colors"
+            className="p-1.5 text-primary-100 hover:text-white hover:bg-white/20 rounded-md transition-colors cursor-pointer"
           >
             <Minimize2 className="w-4 h-4" />
           </button>
           <button 
             onClick={(e) => { e.stopPropagation(); setIsOpen(false); setIsMinimized(false); }}
-            className="p-1.5 text-violet-200 hover:text-white hover:bg-white/20 rounded-md transition-colors"
+            className="p-1.5 text-primary-100 hover:text-white hover:bg-white/20 rounded-md transition-colors cursor-pointer"
           >
             <X className="w-4 h-4" />
           </button>
@@ -140,14 +140,14 @@ export const Chatbot: React.FC = () => {
                 )}>
                   <div className={cn(
                     "flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center",
-                    msg.sender === 'user' ? "ml-2 bg-gray-200 text-gray-600" : "mr-2 bg-violet-100 text-violet-600"
+                    msg.sender === 'user' ? "ml-2 bg-gray-200 text-gray-600" : "mr-2 bg-primary-100 text-primary-500"
                   )}>
                     {msg.sender === 'user' ? <User className="w-4 h-4" /> : <Bot className="w-4 h-4" />}
                   </div>
                   <div className={cn(
                     "px-4 py-2 text-sm shadow-sm",
                     msg.sender === 'user' 
-                      ? "bg-violet-600 text-white rounded-2xl rounded-tr-sm" 
+                      ? "bg-primary-500 text-white rounded-2xl rounded-tr-sm" 
                       : "bg-white border border-gray-100 text-gray-800 rounded-2xl rounded-tl-sm"
                   )}>
                     {msg.text}
@@ -159,13 +159,13 @@ export const Chatbot: React.FC = () => {
             {isTyping && (
               <div className="flex w-full justify-start">
                 <div className="flex max-w-[85%] flex-row">
-                  <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mr-2 bg-violet-100 text-violet-600">
+                  <div className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center mr-2 bg-primary-100 text-primary-500">
                     <Bot className="w-4 h-4" />
                   </div>
                   <div className="px-4 py-3 bg-white border border-gray-100 text-gray-800 rounded-2xl rounded-tl-sm shadow-sm flex items-center gap-1.5">
-                    <div className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                    <div className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                    <div className="w-1.5 h-1.5 bg-violet-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                    <div className="w-1.5 h-1.5 bg-primary-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                    <div className="w-1.5 h-1.5 bg-primary-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                    <div className="w-1.5 h-1.5 bg-primary-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
                   </div>
                 </div>
               </div>
@@ -182,12 +182,12 @@ export const Chatbot: React.FC = () => {
                 onChange={(e) => setInputValue(e.target.value)}
                 onKeyDown={handleKeyDown}
                 placeholder="Nhập tin nhắn..."
-                className="w-full pl-4 pr-12 py-2.5 bg-gray-100 border-transparent rounded-xl text-sm focus:bg-white focus:border-violet-500 focus:ring-2 focus:ring-violet-200 transition-all outline-none"
+                className="w-full pl-4 pr-12 py-2.5 bg-gray-100 border-transparent rounded-xl text-sm focus:bg-white focus:border-primary-500 focus:ring-2 focus:ring-primary-100 transition-all outline-none"
               />
               <button
                 onClick={handleSendMessage}
                 disabled={!inputValue.trim()}
-                className="absolute right-1.5 p-1.5 text-white bg-violet-600 hover:bg-violet-700 disabled:bg-gray-300 disabled:text-gray-500 rounded-lg transition-colors flex items-center justify-center"
+                className="absolute right-1.5 p-1.5 text-white bg-primary-500 hover:bg-primary-600 disabled:bg-gray-300 disabled:text-gray-500 rounded-lg transition-colors cursor-pointer flex items-center justify-center"
               >
                 <Send className="w-4 h-4" />
               </button>
