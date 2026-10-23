@@ -98,9 +98,15 @@
 /* Engineering blueprint grid background */
 .bg-engineering-grid {
   background-image: 
-    linear-gradient(to right, var(--border-subtle) 1.2px, transparent 1.2px),
-    linear-gradient(to bottom, var(--border-subtle) 1.2px, transparent 1.2px);
-  background-size: 36px 36px;
+    linear-gradient(to right, var(--grid-line, rgba(15, 23, 42, 0.04)) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid-line, rgba(15, 23, 42, 0.04)) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* Marquee edge fade mask */
+.marquee-fade-mask {
+  mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
 }
 
 /* Smooth scrolling news ticker marquee animation */

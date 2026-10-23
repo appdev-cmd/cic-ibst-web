@@ -31,7 +31,7 @@ import {
 } from 'lucide-react';
 import { useTheme, PRIMARY_COLORS } from './context/ThemeContext';
 import { cn } from './lib/utils';
-import { Chatbot } from './components/Chatbot';
+import { QuickMenu } from './components/QuickMenu';
 // --- MOCK DATA FOR ALL SITEMAP SECTIONS ---
 
 const LEADERS = [
@@ -671,62 +671,101 @@ export default function App() {
   return (
     <div className="min-h-screen bg-page bg-engineering-grid text-ink transition-all relative font-sans">
       {/* ─── GOV TOP BRANDING LINE ─── */}
-      <div className="w-full bg-gradient-to-r from-primary-700 via-primary-600 to-indigo-800 text-[10px] text-white/90 py-1.5 px-6 font-bold tracking-wider uppercase flex justify-between items-center border-b border-white/10">
-        <div>{lang === 'vi' ? 'CỔNG THÔNG TIN ĐIỆN TỬ BỘ XÂY DỰNG VÀ CÁC VIỆN NGHIÊN CỨU' : 'PORTAL OF MINISTRY OF CONSTRUCTION & RESEARCH INSTITUTES'}</div>
-        <div className="hidden sm:flex items-center gap-3">
-          <span>QCVN 06:2026</span>
-          <span className="w-1 h-1 bg-white/40 rounded-full"></span>
-          <span>TCVN 9311</span>
+      <div className="w-full bg-gradient-to-r from-[#0f3460] via-primary-700 to-primary-800 text-[10px] text-white/95 py-1 border-b border-white/10">
+        <div className="max-w-[1440px] xl:max-w-[1520px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 font-bold tracking-wider uppercase flex justify-between items-center">
+          <div className="flex items-center gap-2">
+            <span className="inline-block w-1.5 h-1.5 rounded-full bg-amber-400"></span>
+            <span>
+              {lang === 'vi'
+                ? 'BỘ XÂY DỰNG — CỔNG THÔNG TIN KHOA HỌC CÔNG NGHỆ & TIÊU CHUẨN XÂY DỰNG'
+                : 'MINISTRY OF CONSTRUCTION — BUILDING SCIENCE, TECHNOLOGY & STANDARDS PORTAL'}
+            </span>
+          </div>
+          <div className="hidden sm:flex items-center gap-3 text-white/85">
+            <button
+              onClick={() => {
+                handleTabChange('state-gov', 'quy-chuan-tieu-chuan');
+                setSelectedStandard('qcvn06');
+              }}
+              className="hover:text-amber-300 transition-colors cursor-pointer"
+            >
+              QCVN 06:2026/BXD
+            </button>
+            <span className="w-1 h-1 bg-white/40 rounded-full"></span>
+            <button
+              onClick={() => {
+                handleTabChange('state-gov', 'quy-chuan-tieu-chuan');
+                setSelectedStandard('qcvn16');
+              }}
+              className="hover:text-amber-300 transition-colors cursor-pointer"
+            >
+              QCVN 16:2023/BXD
+            </button>
+            <span className="w-1 h-1 bg-white/40 rounded-full"></span>
+            <button
+              onClick={() => handleTabChange('intro', 'phong-lab')}
+              className="hover:text-amber-300 transition-colors cursor-pointer"
+            >
+              ISO/IEC 17025 (VILAS)
+            </button>
+          </div>
         </div>
       </div>
 
       {/* ─── WEB PORTAL HEADER ─── */}
-      <div className="border-b border-border bg-surface/90 backdrop-blur-md px-6 py-4 shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4 transition-all">
-        <div className="flex items-center gap-3 shrink-0">
-          <div className="h-12 w-12 bg-white rounded-xl shadow-md border border-border flex items-center justify-center p-1.5 overflow-hidden transition-all hover:scale-105 shrink-0">
+      <div className="relative z-40 border-b border-border bg-surface py-2.5 shadow-2xs transition-all">
+        <div className="max-w-[1440px] xl:max-w-[1520px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row md:items-center justify-between gap-3">
+        <div
+          onClick={() => handleTabChange('home')}
+          className="flex items-center gap-3 shrink-0 cursor-pointer group"
+        >
+          <div className="h-10 w-10 xl:h-11 xl:w-11 bg-white rounded-xl shadow-xs border border-border flex items-center justify-center p-1 overflow-hidden transition-transform group-hover:scale-105 shrink-0">
             <img src="https://ibst.vn/templates/e4cms/images/icon/logo5.png" alt="Logo IBST" className="object-contain w-full h-full" />
           </div>
           <div className="text-left shrink-0">
-            <h1 className="text-xs sm:text-sm md:text-base font-extrabold tracking-tight text-primary-600 uppercase leading-none">
+            <p className="text-[10px] font-extrabold text-amber-600 dark:text-amber-400 tracking-widest uppercase leading-none mb-0.5">
+              {lang === 'vi' ? 'BỘ XÂY DỰNG' : 'MINISTRY OF CONSTRUCTION'}
+            </p>
+            <h1 className="text-xs sm:text-sm xl:text-base font-black tracking-tight text-primary-700 dark:text-primary-400 uppercase leading-tight">
               {lang === 'vi' ? 'Viện Khoa học Công nghệ Xây dựng' : 'Institute for Building Science and Technology'}
             </h1>
-            <p className="text-[8px] sm:text-[9.5px] font-extrabold text-ink-muted tracking-widest uppercase mt-1 flex items-center gap-1">
-              <span className="w-1 h-1 rounded-full bg-success shrink-0"></span>
-              {lang === 'vi' ? 'Đơn vị Sự nghiệp Hạng I — Bộ Xây Dựng' : 'National Class-I Science Institution — MOC'}
+            <p className="text-[10px] font-bold text-ink-muted tracking-wide mt-0.5 flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 rounded-full bg-success-500 shrink-0"></span>
+              {lang === 'vi' ? 'Đơn vị Sự nghiệp Khoa học & Công nghệ Hạng I Quốc gia (IBST)' : 'National Class-I Science & Technology Institution (IBST)'}
             </p>
           </div>
         </div>
 
-        {/* Ticker chạy tin tức nổi bật để lấp đầy khoảng trắng và tạo sinh động */}
-        <div className="hidden lg:flex flex-1 mx-4 lg:mx-8 bg-muted border border-border-subtle rounded-xl px-3 py-1.5 items-center gap-2.5 overflow-hidden h-10 relative animate-marquee-hover-pause shadow-inner">
-          <div className="flex items-center gap-1.5 text-[8.5px] font-black text-white bg-red-600 rounded-lg px-2 py-1 animate-pulse shrink-0 tracking-wider">
-            <Volume2 size={10} />
+        {/* Ticker chạy tin tức nổi bật */}
+        <div className="hidden xl:flex flex-1 mx-4 bg-muted border border-border rounded-xl px-3 py-1.5 items-center gap-2.5 overflow-hidden h-8 relative animate-marquee-hover-pause shadow-inner">
+          <div className="flex items-center gap-1 text-[9px] font-black text-white bg-red-600 rounded-md px-2 py-0.5 shrink-0 tracking-wider uppercase shadow-2xs">
+            <Volume2 size={11} />
             {lang === 'vi' ? 'TIN NỔI BẬT' : 'NEWSFLASH'}
           </div>
-          <div className="flex-1 overflow-hidden relative w-full h-full flex items-center">
-            <div className="animate-marquee text-[11px] font-black text-ink-secondary tracking-wide flex flex-row flex-nowrap items-center whitespace-nowrap">
+          <div className="flex-1 overflow-hidden relative w-full h-full flex items-center marquee-fade-mask">
+            <div className="animate-marquee text-[11px] font-bold text-ink-secondary tracking-wide flex flex-row flex-nowrap items-center whitespace-nowrap">
               {/* Loop 1 */}
-              <div className="flex gap-12 shrink-0 pr-12">
+              <div className="flex gap-10 shrink-0 pr-10">
                 {NEWS_ARTICLES.map((art) => (
                   <button 
                     key={`m1-${art.id}`}
                     onClick={() => handleViewArticle(art)}
                     className="hover:text-primary-500 hover:underline transition-colors flex items-center gap-1.5 cursor-pointer text-left focus:outline-none shrink-0 whitespace-nowrap"
                   >
-                    <span className="text-red-500 font-extrabold shrink-0">★</span>
+                    <span className="text-amber-500 font-extrabold shrink-0">★</span>
                     <span className="shrink-0">{art.title}</span>
                   </button>
                 ))}
               </div>
               {/* Loop 2 to ensure seamless infinite looping */}
-              <div className="flex gap-12 shrink-0 pr-12">
+              <div className="flex gap-10 shrink-0 pr-10">
                 {NEWS_ARTICLES.map((art) => (
                   <button 
                     key={`m2-${art.id}`}
                     onClick={() => handleViewArticle(art)}
                     className="hover:text-primary-500 hover:underline transition-colors flex items-center gap-1.5 cursor-pointer text-left focus:outline-none shrink-0 whitespace-nowrap"
                   >
-                    <span className="text-red-500 font-extrabold shrink-0">★</span>
+                    <span className="text-amber-500 font-extrabold shrink-0">★</span>
                     <span className="shrink-0">{art.title}</span>
                   </button>
                 ))}
@@ -735,30 +774,36 @@ export default function App() {
           </div>
         </div>
 
-        <div className="flex items-center flex-wrap gap-4 text-xs">
-          <div className="flex items-center gap-4 text-ink-secondary hidden lg:flex font-semibold">
-            <div className="flex items-center gap-1.5 hover:text-primary-500 transition-colors">
-              <Phone size={13} className="text-primary-500" />
-              <span>024 37544196</span>
-            </div>
-            <div className="flex items-center gap-1.5 hover:text-primary-500 transition-colors">
-              <Mail size={13} className="text-primary-500" />
-              <span>vkhcnxd@ibst.vn</span>
-            </div>
-          </div>
+        <div className="flex items-center flex-wrap gap-2.5 text-xs">
+          {/* Hotline Badge kiểu Mua Sắm Công */}
+          <a
+            href="tel:02437544196"
+            className="hidden sm:flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-amber-600 to-amber-500 hover:from-amber-500 hover:to-amber-600 text-white font-extrabold text-[11px] shadow-xs transition-all cursor-pointer"
+          >
+            <Phone size={12} className="shrink-0" />
+            <span>{lang === 'vi' ? 'Tổng đài: 024 3754 4196' : 'Hotline: 024 3754 4196'}</span>
+          </a>
+
+          <a
+            href="mailto:vkhcnxd@ibst.vn"
+            className="hidden lg:flex items-center gap-1.5 text-ink-secondary hover:text-primary-500 font-bold text-[11px] transition-colors px-2 py-1 rounded-lg hover:bg-muted"
+          >
+            <Mail size={13} className="text-primary-500" />
+            <span>vkhcnxd@ibst.vn</span>
+          </a>
 
           {/* Ngôn ngữ & Cài đặt */}
-          <div className="flex items-center gap-2 relative">
-            <div className="flex items-center gap-1 bg-muted p-1 rounded-lg border border-border">
+          <div className="flex items-center gap-1.5 relative">
+            <div className="flex items-center gap-1 bg-muted p-0.5 rounded-lg border border-border">
               <button
                 onClick={() => setLang('vi')}
                 title="Tiếng Việt"
                 className={cn(
                   "p-1 rounded-md transition-all cursor-pointer flex items-center justify-center",
-                  lang === 'vi' ? "bg-surface shadow-sm ring-1 ring-border" : "opacity-60 hover:opacity-100"
+                  lang === 'vi' ? "bg-surface shadow-xs ring-1 ring-border" : "opacity-60 hover:opacity-100"
                 )}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" className="w-5 h-3.5 rounded-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 600" className="w-5 h-3.5 rounded-xs">
                   <rect fill="#da251d" width="900" height="600"/>
                   <polygon fill="#ffcd00" points="450,120 521,338 335,203 565,203 379,338"/>
                 </svg>
@@ -768,10 +813,10 @@ export default function App() {
                 title="English"
                 className={cn(
                   "p-1 rounded-md transition-all cursor-pointer flex items-center justify-center",
-                  lang === 'en' ? "bg-surface shadow-sm ring-1 ring-border" : "opacity-60 hover:opacity-100"
+                  lang === 'en' ? "bg-surface shadow-xs ring-1 ring-border" : "opacity-60 hover:opacity-100"
                 )}
               >
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" className="w-5 h-3.5 rounded-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 30" className="w-5 h-3.5 rounded-xs">
                   <clipPath id="t"><path d="M30,15 h30 v15 z v-15 h-30 z h-30 v-15 z v15 h30 z"/></clipPath>
                   <path d="M0,0 v30 h60 v-30 z" fill="#012169"/>
                   <path d="M0,0 L60,30 M60,0 L0,30" stroke="#fff" strokeWidth="6"/>
@@ -789,130 +834,147 @@ export default function App() {
               className={cn(
                 "w-8 h-8 rounded-full flex items-center justify-center transition-all cursor-pointer border",
                 settingsOpen 
-                  ? "bg-primary-500 text-white border-primary-500 shadow-md" 
+                  ? "bg-primary-500 text-white border-primary-500 shadow-sm" 
                   : "bg-surface text-ink-secondary border-border hover:bg-muted hover:text-ink"
               )}
             >
-              <Settings size={16} className={cn("transition-transform duration-300", settingsOpen && "rotate-45")} />
+              <Settings size={14} className={cn("transition-transform duration-300", settingsOpen && "rotate-45")} />
             </button>
 
             {settingsOpen && (
-              <div className="absolute right-0 top-11 w-64 p-4 bg-surface border border-border rounded-xl shadow-dropdown text-left space-y-4 animate-fade-in z-50">
-                <div className="pb-2 border-b border-border-subtle flex justify-between items-center">
-                  <span className="text-xs font-black text-ink">Cài đặt giao diện</span>
-                  <span className="text-3xs text-primary-500 font-bold">Public Web</span>
-                </div>
+              <>
+                <div
+                  className="fixed inset-0 z-40"
+                  onClick={() => setSettingsOpen(false)}
+                />
+                <div className="absolute right-0 top-10 w-64 p-3.5 bg-surface border border-border rounded-xl shadow-dropdown text-left space-y-3.5 animate-fade-in z-50">
+                  <div className="pb-2 border-b border-border-subtle flex justify-between items-center">
+                    <span className="text-xs font-black text-ink">Cài đặt giao diện</span>
+                    <span className="text-3xs text-primary-500 font-bold">Public Web</span>
+                  </div>
 
-                {/* Theme Select */}
-                <div className="space-y-1.5">
-                  <span className="text-2xs font-semibold text-ink-secondary">Giao diện nền</span>
-                  <div className="flex gap-1 bg-muted p-0.5 rounded-lg">
-                    <button
-                      onClick={() => setTheme('light')}
-                      className={cn(
-                        "flex-1 py-1 text-3xs font-bold rounded-md flex items-center justify-center gap-1 cursor-pointer transition-all",
-                        theme === 'light' ? "bg-surface text-primary shadow-sm" : "text-ink-muted hover:text-ink"
-                      )}
-                    >
-                      <Sun size={11} /> Sáng
-                    </button>
-                    <button
-                      onClick={() => setTheme('nature')}
-                      className={cn(
-                        "flex-1 py-1 text-3xs font-bold rounded-md flex items-center justify-center gap-1 cursor-pointer transition-all",
-                        theme === 'nature' ? "bg-surface text-primary shadow-sm" : "text-ink-muted hover:text-ink"
-                      )}
-                    >
-                      <Leaf size={11} /> Bảo vệ
-                    </button>
-                    <button
-                      onClick={() => setTheme('dark')}
-                      className={cn(
-                        "flex-1 py-1 text-3xs font-bold rounded-md flex items-center justify-center gap-1 cursor-pointer transition-all",
-                        theme === 'dark' ? "bg-surface text-primary shadow-sm" : "text-ink-muted hover:text-ink"
-                      )}
-                    >
-                      <Moon size={11} /> Tối
-                    </button>
+                  {/* Theme Select */}
+                  <div className="space-y-1.5">
+                    <span className="text-2xs font-semibold text-ink-secondary">Giao diện nền</span>
+                    <div className="flex gap-1 bg-muted p-0.5 rounded-lg">
+                      <button
+                        onClick={() => setTheme('light')}
+                        className={cn(
+                          "flex-1 py-1 text-3xs font-bold rounded-md flex items-center justify-center gap-1 cursor-pointer transition-all",
+                          theme === 'light' ? "bg-surface text-primary shadow-sm" : "text-ink-muted hover:text-ink"
+                        )}
+                      >
+                        <Sun size={11} /> Sáng
+                      </button>
+                      <button
+                        onClick={() => setTheme('nature')}
+                        className={cn(
+                          "flex-1 py-1 text-3xs font-bold rounded-md flex items-center justify-center gap-1 cursor-pointer transition-all",
+                          theme === 'nature' ? "bg-surface text-primary shadow-sm" : "text-ink-muted hover:text-ink"
+                        )}
+                      >
+                        <Leaf size={11} /> Bảo vệ
+                      </button>
+                      <button
+                        onClick={() => setTheme('dark')}
+                        className={cn(
+                          "flex-1 py-1 text-3xs font-bold rounded-md flex items-center justify-center gap-1 cursor-pointer transition-all",
+                          theme === 'dark' ? "bg-surface text-primary shadow-sm" : "text-ink-muted hover:text-ink"
+                        )}
+                      >
+                        <Moon size={11} /> Tối
+                      </button>
+                    </div>
                   </div>
-                </div>
 
-                {/* Primary Colors */}
-                <div className="space-y-1.5">
-                  <span className="text-2xs font-semibold text-ink-secondary">Màu sắc chủ đạo</span>
-                  <div className="grid grid-cols-5 gap-1.5 bg-muted p-1.5 rounded-lg justify-items-center">
-                    {PRIMARY_COLORS.map(({ id, name, hex }) => {
-                      const active = primaryColor === id;
-                      return (
-                        <button
-                          key={id}
-                          onClick={() => setPrimaryColor(id)}
-                          title={name}
-                          className={cn(
-                            "w-5 h-5 rounded-full flex items-center justify-center transition-transform hover:scale-110 cursor-pointer",
-                            active && "ring-1 ring-offset-1 ring-offset-surface"
-                          )}
-                          style={{ background: hex }}
-                        >
-                          {active && <Check size={10} className="text-white" strokeWidth={3} />}
-                        </button>
-                      );
-                    })}
+                  {/* Primary Colors */}
+                  <div className="space-y-1.5">
+                    <span className="text-2xs font-semibold text-ink-secondary">Màu sắc chủ đạo</span>
+                    <div className="grid grid-cols-5 gap-1.5 bg-muted p-1.5 rounded-lg justify-items-center">
+                      {PRIMARY_COLORS.map(({ id, name, hex }) => {
+                        const active = primaryColor === id;
+                        return (
+                          <button
+                            key={id}
+                            onClick={() => setPrimaryColor(id)}
+                            title={name}
+                            className={cn(
+                              "w-5 h-5 rounded-full flex items-center justify-center transition-transform hover:scale-110 cursor-pointer",
+                              active && "ring-1 ring-offset-1 ring-offset-surface"
+                            )}
+                            style={{ background: hex }}
+                          >
+                            {active && <Check size={10} className="text-white" strokeWidth={3} />}
+                          </button>
+                        );
+                      })}
+                    </div>
                   </div>
-                </div>
 
-                {/* Zoom Control */}
-                <div className="space-y-1.5">
-                  <div className="flex justify-between items-center text-2xs font-semibold text-ink-secondary">
-                    <span>Tỷ lệ hiển thị</span>
-                    <span className="font-bold text-primary-500">{zoom}%</span>
-                  </div>
-                  <div className="flex items-center gap-2">
-                    <button
-                      onClick={() => setZoom(Math.max(100, zoom - 10))}
-                      disabled={zoom <= 100}
-                      className="w-6 h-6 flex items-center justify-center rounded-lg border border-border bg-subtle hover:bg-muted text-xs font-bold disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-                    >
-                      <ZoomOut size={10} />
-                    </button>
-                    <input
-                      type="range"
-                      min="100"
-                      max="200"
-                      step="10"
-                      value={zoom}
-                      onChange={(e) => setZoom(Number(e.target.value))}
-                      className="flex-1 h-1 bg-muted rounded-lg appearance-none cursor-pointer accent-[var(--color-primary)] focus:outline-none"
-                      style={{
-                        background: `linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) ${zoom - 100}%, var(--bg-muted) ${zoom - 100}%, var(--bg-muted) 100%)`
-                      }}
-                    />
-                    <button
-                      onClick={() => setZoom(Math.min(200, zoom + 10))}
-                      disabled={zoom >= 200}
-                      className="w-6 h-6 flex items-center justify-center rounded-lg border border-border bg-subtle hover:bg-muted text-xs font-bold disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
-                    >
-                      <ZoomIn size={10} />
-                    </button>
+                  {/* Zoom Control (70% - 150%) */}
+                  <div className="space-y-1.5">
+                    <div className="flex justify-between items-center text-2xs font-semibold text-ink-secondary">
+                      <span>Tỷ lệ hiển thị</span>
+                      <div className="flex items-center gap-1.5">
+                        {zoom !== 100 && (
+                          <button
+                            onClick={() => setZoom(100)}
+                            className="text-[10px] font-bold text-ink-muted hover:text-primary-500 underline cursor-pointer"
+                          >
+                            Mặc định
+                          </button>
+                        )}
+                        <span className="font-bold text-primary-500">{zoom}%</span>
+                      </div>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <button
+                        onClick={() => setZoom(Math.max(70, zoom - 5))}
+                        disabled={zoom <= 70}
+                        className="w-6 h-6 flex items-center justify-center rounded-lg border border-border bg-subtle hover:bg-muted text-xs font-bold disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                      >
+                        <ZoomOut size={10} />
+                      </button>
+                      <input
+                        type="range"
+                        min="70"
+                        max="150"
+                        step="5"
+                        value={zoom}
+                        onChange={(e) => setZoom(Number(e.target.value))}
+                        className="flex-1 h-1 bg-muted rounded-lg appearance-none cursor-pointer accent-[var(--color-primary)] focus:outline-none"
+                        style={{
+                          background: `linear-gradient(to right, var(--color-primary) 0%, var(--color-primary) ${((zoom - 70) / 80) * 100}%, var(--bg-muted) ${((zoom - 70) / 80) * 100}%, var(--bg-muted) 100%)`
+                        }}
+                      />
+                      <button
+                        onClick={() => setZoom(Math.min(150, zoom + 5))}
+                        disabled={zoom >= 150}
+                        className="w-6 h-6 flex items-center justify-center rounded-lg border border-border bg-subtle hover:bg-muted text-xs font-bold disabled:opacity-40 disabled:cursor-not-allowed cursor-pointer"
+                      >
+                        <ZoomIn size={10} />
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
+              </>
             )}
           </div>
+        </div>
         </div>
       </div>
 
       {/* ─── WEB PORTAL NAVIGATION (SITEMAP MEGA MENU) ─── */}
-      <div className="sticky top-0 z-30 border-b border-border bg-surface/90 backdrop-blur-md shadow-card">
-        <div className="max-w-7xl mx-auto px-4">
-          <div className="flex items-center justify-between h-14">
-            <div className="flex space-x-1.5 lg:overflow-visible overflow-x-auto scrollbar-none py-1.5 min-w-0 flex-1">
+      <div className="sticky top-0 z-30 border-b border-border bg-surface shadow-sm">
+        <div className="max-w-[1440px] xl:max-w-[1520px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-11 xl:h-12 gap-2">
+            <div className="flex items-center gap-0.5 xl:gap-1 lg:overflow-visible overflow-x-auto scrollbar-none py-1 min-w-0 flex-1">
               <button
                 onClick={() => handleTabChange('home')}
                 className={cn(
-                  "px-4 py-2 rounded-xl text-2xs font-extrabold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5",
+                  "px-2.5 xl:px-3 py-1.5 rounded-lg text-[11px] xl:text-xs font-extrabold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1",
                   activeTab === 'home'
-                    ? "bg-primary-500 text-white shadow-sm"
+                    ? "bg-primary-500 text-white shadow-xs"
                     : "text-ink-secondary hover:bg-muted hover:text-ink"
                 )}
               >
@@ -924,28 +986,30 @@ export default function App() {
                 <button
                   onClick={() => handleTabChange('intro', 'all')}
                   className={cn(
-                    "px-4 py-2 rounded-xl text-2xs font-extrabold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer",
+                    "px-2.5 xl:px-3 py-1.5 rounded-lg text-[11px] xl:text-xs font-extrabold whitespace-nowrap transition-all flex items-center gap-1 cursor-pointer",
                     activeTab === 'intro'
-                      ? "bg-primary-500 text-white shadow-sm"
+                      ? "bg-primary-500 text-white shadow-xs"
                       : "text-ink-secondary hover:bg-muted hover:text-ink"
                   )}
                 >
                   {lang === 'vi' ? 'Giới thiệu' : 'Introduction'}
-                  <ChevronDown size={12} className="opacity-70 group-hover:rotate-180 transition-transform duration-200" />
+                  <ChevronDown size={11} className="opacity-70 group-hover:rotate-180 transition-transform duration-200" />
                 </button>
-                <div className="absolute left-0 mt-1 w-56 bg-surface border border-border shadow-dropdown rounded-xl py-2 hidden group-hover:block z-40 animate-fade-in">
-                  <button onClick={() => handleTabChange('intro', 'nhiem-vu')} className="w-full text-left px-4 py-2 text-2xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between">
-                    <span>{lang === 'vi' ? 'Chức năng nhiệm vụ' : 'Functions & Tasks'}</span>
-                    <ChevronRight size={10} />
-                  </button>
-                  <button onClick={() => handleTabChange('intro', 'co-cau')} className="w-full text-left px-4 py-2 text-2xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between">
-                    <span>{lang === 'vi' ? 'Cơ cấu tổ chức' : 'Organizational Structure'}</span>
-                    <ChevronRight size={10} />
-                  </button>
-                  <button onClick={() => handleTabChange('intro', 'phong-lab')} className="w-full text-left px-4 py-2 text-2xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between">
-                    <span>{lang === 'vi' ? 'Hệ thống phòng thí nghiệm' : 'Laboratories System'}</span>
-                    <ChevronRight size={10} />
-                  </button>
+                <div className="absolute left-0 top-full pt-1 w-56 hidden group-hover:block z-40 animate-fade-in">
+                  <div className="bg-surface border border-border shadow-dropdown rounded-xl py-1.5 overflow-hidden">
+                    <button onClick={() => handleTabChange('intro', 'nhiem-vu')} className="w-full text-left px-3.5 py-2 text-xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between cursor-pointer">
+                      <span>{lang === 'vi' ? 'Chức năng nhiệm vụ' : 'Functions & Tasks'}</span>
+                      <ChevronRight size={12} />
+                    </button>
+                    <button onClick={() => handleTabChange('intro', 'co-cau')} className="w-full text-left px-3.5 py-2 text-xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between cursor-pointer">
+                      <span>{lang === 'vi' ? 'Cơ cấu tổ chức' : 'Organizational Structure'}</span>
+                      <ChevronRight size={12} />
+                    </button>
+                    <button onClick={() => handleTabChange('intro', 'phong-lab')} className="w-full text-left px-3.5 py-2 text-xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between cursor-pointer">
+                      <span>{lang === 'vi' ? 'Hệ thống phòng thí nghiệm' : 'Laboratories System'}</span>
+                      <ChevronRight size={12} />
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -954,24 +1018,26 @@ export default function App() {
                 <button
                   onClick={() => handleTabChange('news', 'all')}
                   className={cn(
-                    "px-4 py-2 rounded-xl text-2xs font-extrabold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer",
+                    "px-2.5 xl:px-3 py-1.5 rounded-lg text-[11px] xl:text-xs font-extrabold whitespace-nowrap transition-all flex items-center gap-1 cursor-pointer",
                     activeTab === 'news'
-                      ? "bg-primary-500 text-white shadow-sm"
+                      ? "bg-primary-500 text-white shadow-xs"
                       : "text-ink-secondary hover:bg-muted hover:text-ink"
                   )}
                 >
                   {lang === 'vi' ? 'Tin tức' : 'News'}
-                  <ChevronDown size={12} className="opacity-70 group-hover:rotate-180 transition-transform duration-200" />
+                  <ChevronDown size={11} className="opacity-70 group-hover:rotate-180 transition-transform duration-200" />
                 </button>
-                <div className="absolute left-0 mt-1 w-52 bg-surface border border-border shadow-dropdown rounded-xl py-2 hidden group-hover:block z-40 animate-fade-in">
-                  <button onClick={() => handleTabChange('news', 'tin-hoat-dong')} className="w-full text-left px-4 py-2 text-2xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between">
-                    <span>Tin hoạt động Viện</span>
-                    <ChevronRight size={10} />
-                  </button>
-                  <button onClick={() => handleTabChange('news', 'tin-lien-quan')} className="w-full text-left px-4 py-2 text-2xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between">
-                    <span>Tin tức liên quan</span>
-                    <ChevronRight size={10} />
-                  </button>
+                <div className="absolute left-0 top-full pt-1 w-52 hidden group-hover:block z-40 animate-fade-in">
+                  <div className="bg-surface border border-border shadow-dropdown rounded-xl py-1.5 overflow-hidden">
+                    <button onClick={() => handleTabChange('news', 'tin-hoat-dong')} className="w-full text-left px-3.5 py-2 text-xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between cursor-pointer">
+                      <span>Tin hoạt động Viện</span>
+                      <ChevronRight size={12} />
+                    </button>
+                    <button onClick={() => handleTabChange('news', 'tin-lien-quan')} className="w-full text-left px-3.5 py-2 text-xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between cursor-pointer">
+                      <span>Tin tức liên quan</span>
+                      <ChevronRight size={12} />
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -980,24 +1046,26 @@ export default function App() {
                 <button
                   onClick={() => handleTabChange('state-gov', 'all')}
                   className={cn(
-                    "px-4 py-2 rounded-xl text-2xs font-extrabold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer",
+                    "px-2.5 xl:px-3 py-1.5 rounded-lg text-[11px] xl:text-xs font-extrabold whitespace-nowrap transition-all flex items-center gap-1 cursor-pointer",
                     activeTab === 'state-gov'
-                      ? "bg-primary-500 text-white shadow-sm"
+                      ? "bg-primary-500 text-white shadow-xs"
                       : "text-ink-secondary hover:bg-muted hover:text-ink"
                   )}
                 >
                   {lang === 'vi' ? 'Phục vụ QLNN' : 'State Mgmt'}
-                  <ChevronDown size={12} className="opacity-70 group-hover:rotate-180 transition-transform duration-200" />
+                  <ChevronDown size={11} className="opacity-70 group-hover:rotate-180 transition-transform duration-200" />
                 </button>
-                <div className="absolute left-0 mt-1 w-64 bg-surface border border-border shadow-dropdown rounded-xl py-2 hidden group-hover:block z-40 animate-fade-in">
-                  <button onClick={() => handleTabChange('state-gov', 'du-an-trong-diem')} className="w-full text-left px-4 py-2 text-2xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between">
-                    <span>Dự án trọng điểm quốc gia</span>
-                    <ChevronRight size={10} />
-                  </button>
-                  <button onClick={() => handleTabChange('state-gov', 'quy-chuan-tieu-chuan')} className="w-full text-left px-4 py-2 text-2xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between">
-                    <span>Biên soạn Quy chuẩn, Tiêu chuẩn</span>
-                    <ChevronRight size={10} />
-                  </button>
+                <div className="absolute left-0 top-full pt-1 w-60 hidden group-hover:block z-40 animate-fade-in">
+                  <div className="bg-surface border border-border shadow-dropdown rounded-xl py-1.5 overflow-hidden">
+                    <button onClick={() => handleTabChange('state-gov', 'du-an-trong-diem')} className="w-full text-left px-3.5 py-2 text-xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between cursor-pointer">
+                      <span>Dự án trọng điểm quốc gia</span>
+                      <ChevronRight size={12} />
+                    </button>
+                    <button onClick={() => handleTabChange('state-gov', 'quy-chuan-tieu-chuan')} className="w-full text-left px-3.5 py-2 text-xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between cursor-pointer">
+                      <span>Biên soạn Quy chuẩn, Tiêu chuẩn</span>
+                      <ChevronRight size={12} />
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -1005,9 +1073,9 @@ export default function App() {
               <button
                 onClick={() => handleTabChange('research', 'all')}
                 className={cn(
-                  "px-4 py-2 rounded-xl text-2xs font-extrabold whitespace-nowrap transition-all cursor-pointer",
+                  "px-2.5 xl:px-3 py-1.5 rounded-lg text-[11px] xl:text-xs font-extrabold whitespace-nowrap transition-all cursor-pointer",
                   activeTab === 'research'
-                    ? "bg-primary-500 text-white shadow-sm"
+                    ? "bg-primary-500 text-white shadow-xs"
                     : "text-ink-secondary hover:bg-muted hover:text-ink"
                 )}
               >
@@ -1019,28 +1087,30 @@ export default function App() {
                 <button
                   onClick={() => handleTabChange('training', 'all')}
                   className={cn(
-                    "px-4 py-2 rounded-xl text-2xs font-extrabold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer",
+                    "px-2.5 xl:px-3 py-1.5 rounded-lg text-[11px] xl:text-xs font-extrabold whitespace-nowrap transition-all flex items-center gap-1 cursor-pointer",
                     activeTab === 'training'
-                      ? "bg-primary-500 text-white shadow-sm"
+                      ? "bg-primary-500 text-white shadow-xs"
                       : "text-ink-secondary hover:bg-muted hover:text-ink"
                   )}
                 >
                   {lang === 'vi' ? 'Đào tạo' : 'Training'}
-                  <ChevronDown size={12} className="opacity-70 group-hover:rotate-180 transition-transform duration-200" />
+                  <ChevronDown size={11} className="opacity-70 group-hover:rotate-180 transition-transform duration-200" />
                 </button>
-                <div className="absolute left-0 mt-1 w-60 bg-surface border border-border shadow-dropdown rounded-xl py-2 hidden group-hover:block z-40 animate-fade-in">
-                  <button onClick={() => handleTabChange('training', 'dao-tao-ts')} className="w-full text-left px-4 py-2 text-2xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between">
-                    <span>Đào tạo Tiến sĩ</span>
-                    <ChevronRight size={10} />
-                  </button>
-                  <button onClick={() => handleTabChange('training', 'dao-tao-chuyen-de')} className="w-full text-left px-4 py-2 text-2xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between">
-                    <span>Đào tạo, tập huấn chuyên đề</span>
-                    <ChevronRight size={10} />
-                  </button>
-                  <button onClick={() => handleTabChange('training', 'hoi-nghi-kh')} className="w-full text-left px-4 py-2 text-2xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between">
-                    <span>Hội nghị khoa học</span>
-                    <ChevronRight size={10} />
-                  </button>
+                <div className="absolute left-0 top-full pt-1 w-60 hidden group-hover:block z-40 animate-fade-in">
+                  <div className="bg-surface border border-border shadow-dropdown rounded-xl py-1.5 overflow-hidden">
+                    <button onClick={() => handleTabChange('training', 'dao-tao-ts')} className="w-full text-left px-3.5 py-2 text-xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between cursor-pointer">
+                      <span>Đào tạo Tiến sĩ</span>
+                      <ChevronRight size={12} />
+                    </button>
+                    <button onClick={() => handleTabChange('training', 'dao-tao-chuyen-de')} className="w-full text-left px-3.5 py-2 text-xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between cursor-pointer">
+                      <span>Đào tạo, tập huấn chuyên đề</span>
+                      <ChevronRight size={12} />
+                    </button>
+                    <button onClick={() => handleTabChange('training', 'hoi-nghi-kh')} className="w-full text-left px-3.5 py-2 text-xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between cursor-pointer">
+                      <span>Hội nghị khoa học</span>
+                      <ChevronRight size={12} />
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -1049,28 +1119,30 @@ export default function App() {
                 <button
                   onClick={() => handleTabChange('testing', 'all')}
                   className={cn(
-                    "px-4 py-2 rounded-xl text-2xs font-extrabold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer",
+                    "px-2.5 xl:px-3 py-1.5 rounded-lg text-[11px] xl:text-xs font-extrabold whitespace-nowrap transition-all flex items-center gap-1 cursor-pointer",
                     activeTab === 'testing'
-                      ? "bg-primary-500 text-white shadow-sm"
+                      ? "bg-primary-500 text-white shadow-xs"
                       : "text-ink-secondary hover:bg-muted hover:text-ink"
                   )}
                 >
                   {lang === 'vi' ? 'Thí nghiệm & Chứng nhận' : 'Testing & Cert'}
-                  <ChevronDown size={12} className="opacity-70 group-hover:rotate-180 transition-transform duration-200" />
+                  <ChevronDown size={11} className="opacity-70 group-hover:rotate-180 transition-transform duration-200" />
                 </button>
-                <div className="absolute left-0 mt-1 w-64 bg-surface border border-border shadow-dropdown rounded-xl py-2 hidden group-hover:block z-40 animate-fade-in">
-                  <button onClick={() => handleTabChange('testing', 'thi-nghiem')} className="w-full text-left px-4 py-2 text-2xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between">
-                    <span>Thí nghiệm chuyên ngành</span>
-                    <ChevronRight size={10} />
-                  </button>
-                  <button onClick={() => handleTabChange('testing', 'chung-nhan')} className="w-full text-left px-4 py-2 text-2xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between">
-                    <span>Chứng nhận hợp chuẩn, hợp quy</span>
-                    <ChevronRight size={10} />
-                  </button>
-                  <button onClick={() => handleTabChange('testing', 'kiem-dinh')} className="w-full text-left px-4 py-2 text-2xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between">
-                    <span>Kiểm định chất lượng công trình</span>
-                    <ChevronRight size={10} />
-                  </button>
+                <div className="absolute left-0 top-full pt-1 w-64 hidden group-hover:block z-40 animate-fade-in">
+                  <div className="bg-surface border border-border shadow-dropdown rounded-xl py-1.5 overflow-hidden">
+                    <button onClick={() => handleTabChange('testing', 'thi-nghiem')} className="w-full text-left px-3.5 py-2 text-xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between cursor-pointer">
+                      <span>Thí nghiệm chuyên ngành</span>
+                      <ChevronRight size={12} />
+                    </button>
+                    <button onClick={() => handleTabChange('testing', 'chung-nhan')} className="w-full text-left px-3.5 py-2 text-xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between cursor-pointer">
+                      <span>Chứng nhận hợp chuẩn, hợp quy</span>
+                      <ChevronRight size={12} />
+                    </button>
+                    <button onClick={() => handleTabChange('testing', 'kiem-dinh')} className="w-full text-left px-3.5 py-2 text-xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between cursor-pointer">
+                      <span>Kiểm định chất lượng công trình</span>
+                      <ChevronRight size={12} />
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -1079,28 +1151,30 @@ export default function App() {
                 <button
                   onClick={() => handleTabChange('consulting', 'all')}
                   className={cn(
-                    "px-4 py-2 rounded-xl text-2xs font-extrabold whitespace-nowrap transition-all flex items-center gap-1.5 cursor-pointer",
+                    "px-2.5 xl:px-3 py-1.5 rounded-lg text-[11px] xl:text-xs font-extrabold whitespace-nowrap transition-all flex items-center gap-1 cursor-pointer",
                     activeTab === 'consulting'
-                      ? "bg-primary-500 text-white shadow-sm"
+                      ? "bg-primary-500 text-white shadow-xs"
                       : "text-ink-secondary hover:bg-muted hover:text-ink"
                   )}
                 >
                   {lang === 'vi' ? 'Tư vấn & Dịch vụ' : 'Consulting & Const'}
-                  <ChevronDown size={12} className="opacity-70 group-hover:rotate-180 transition-transform duration-200" />
+                  <ChevronDown size={11} className="opacity-70 group-hover:rotate-180 transition-transform duration-200" />
                 </button>
-                <div className="absolute left-0 mt-1 w-60 bg-surface border border-border shadow-dropdown rounded-xl py-2 hidden group-hover:block z-40 animate-fade-in">
-                  <button onClick={() => handleTabChange('consulting', 'tu-van')} className="w-full text-left px-4 py-2 text-2xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between">
-                    <span>Khảo sát, Thiết kế & Giám sát</span>
-                    <ChevronRight size={10} />
-                  </button>
-                  <button onClick={() => handleTabChange('consulting', 'thi-cong')} className="w-full text-left px-4 py-2 text-2xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between">
-                    <span>Thi công xây dựng & Tu bổ di tích</span>
-                    <ChevronRight size={10} />
-                  </button>
-                  <button onClick={() => handleTabChange('consulting', 'san-pham')} className="w-full text-left px-4 py-2 text-2xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between">
-                    <span>Vật liệu & Hóa phẩm xây dựng</span>
-                    <ChevronRight size={10} />
-                  </button>
+                <div className="absolute left-0 top-full pt-1 w-64 hidden group-hover:block z-40 animate-fade-in">
+                  <div className="bg-surface border border-border shadow-dropdown rounded-xl py-1.5 overflow-hidden">
+                    <button onClick={() => handleTabChange('consulting', 'tu-van')} className="w-full text-left px-3.5 py-2 text-xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between cursor-pointer">
+                      <span>Khảo sát, Thiết kế & Giám sát</span>
+                      <ChevronRight size={12} />
+                    </button>
+                    <button onClick={() => handleTabChange('consulting', 'thi-cong')} className="w-full text-left px-3.5 py-2 text-xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between cursor-pointer">
+                      <span>Thi công xây dựng & Tu bổ di tích</span>
+                      <ChevronRight size={12} />
+                    </button>
+                    <button onClick={() => handleTabChange('consulting', 'san-pham')} className="w-full text-left px-3.5 py-2 text-xs font-bold text-ink hover:bg-muted hover:text-primary-500 transition-colors flex items-center justify-between cursor-pointer">
+                      <span>Vật liệu & Hóa phẩm xây dựng</span>
+                      <ChevronRight size={12} />
+                    </button>
+                  </div>
                 </div>
               </div>
 
@@ -1108,9 +1182,9 @@ export default function App() {
               <button
                 onClick={() => handleTabChange('faq', 'all')}
                 className={cn(
-                  "px-4 py-2 rounded-xl text-2xs font-extrabold whitespace-nowrap transition-all cursor-pointer",
+                  "px-2.5 xl:px-3 py-1.5 rounded-lg text-[11px] xl:text-xs font-extrabold whitespace-nowrap transition-all cursor-pointer",
                   activeTab === 'faq'
-                    ? "bg-primary-500 text-white shadow-sm"
+                    ? "bg-primary-500 text-white shadow-xs"
                     : "text-ink-secondary hover:bg-muted hover:text-ink"
                 )}
               >
@@ -1119,67 +1193,105 @@ export default function App() {
             </div>
 
             {/* Quick Search */}
-            <div className="relative hidden sm:block w-64">
+            <div className="relative hidden md:flex items-center w-44 lg:w-48 xl:w-56 focus-within:w-56 xl:focus-within:w-64 transition-all duration-200 shrink-0 z-10 bg-surface">
+              <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-ink-muted pointer-events-none" size={14} />
               <input
                 type="text"
-                placeholder={lang === 'vi' ? 'Tìm kiếm nhanh...' : 'Search...'}
+                placeholder={lang === 'vi' ? 'Tìm kiếm tin tức, đề tài...' : 'Search news, R&D...'}
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full py-1.5 pl-8 pr-3 text-2xs rounded-xl border border-border bg-muted/60 focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all font-semibold"
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  if (activeTab === 'home' && e.target.value.trim().length > 1) {
+                    setActiveTab('research');
+                  }
+                }}
+                className="w-full py-1.5 pl-9 pr-7 text-[11px] xl:text-xs rounded-lg border border-border bg-muted focus:bg-surface focus:outline-none focus:ring-2 focus:ring-primary-500/20 focus:border-primary-500 transition-all font-semibold text-ink"
               />
-              <Search className="absolute left-3 top-2.5 text-ink-muted" size={12} />
+              {searchQuery && (
+                <button
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-ink-muted hover:text-ink text-xs font-bold cursor-pointer"
+                >
+                  ✕
+                </button>
+              )}
             </div>
           </div>
         </div>
       </div>
 
       {/* ─── WEB PORTAL BODY CONTENT ─── */}
-      <div className="max-w-7xl mx-auto px-4 py-6">
+      <div className="max-w-[1440px] xl:max-w-[1520px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 py-5">
 
         {/* 1. PORTAL HOME PAGE */}
         {activeTab === 'home' && (
-          <div className="space-y-6">
+          <div className="space-y-5">
             {/* Redesigned Hero Section (Split-screen & Auto image slider/showcase) */}
-            <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch animate-fade-in-up">
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-5 items-stretch animate-fade-in-up">
               {/* Left Column: Mission, Announcements and CTAs */}
-              <div className="lg:col-span-7 flex flex-col justify-between p-6 md:p-8 bg-gradient-to-br from-primary-900 via-primary-800 to-indigo-950 text-white rounded-2xl border border-primary-800 shadow-card text-left relative overflow-hidden">
+              <div className="lg:col-span-7 flex flex-col justify-between p-5 md:p-6 bg-gradient-to-br from-[#0f3460] via-primary-800 to-primary-950 text-white rounded-2xl border border-primary-700/60 shadow-card text-left relative overflow-hidden">
                 {/* Background decorative elements */}
-                <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
-                <div className="absolute bottom-0 left-0 w-32 h-32 bg-primary-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                <div className="absolute top-0 right-0 w-72 h-72 bg-white/5 rounded-full blur-3xl pointer-events-none"></div>
+                <div className="absolute bottom-0 left-0 w-40 h-40 bg-primary-400/10 rounded-full blur-2xl pointer-events-none"></div>
 
-                <div className="space-y-5 relative z-10">
+                <div className="space-y-3 relative z-10">
                   {/* Announcement Ticker */}
-                  <div className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/15 px-3 py-1 rounded-full text-[10px] font-extrabold tracking-wide uppercase backdrop-blur-sm transition-colors border border-white/5 cursor-pointer max-w-full">
-                    <span className="w-2.5 h-2.5 rounded-full bg-red-500 animate-ping"></span>
-                    <span className="text-red-300 whitespace-nowrap">{lang === 'vi' ? 'THÔNG BÁO MỚI:' : 'NEWSFLASH:'}</span>
-                    <span className="truncate max-w-[200px] sm:max-w-xs md:max-w-md">{NEWS_ARTICLES[0].title}</span>
+                  <div
+                    onClick={() => handleViewArticle(NEWS_ARTICLES[0])}
+                    className="inline-flex items-center gap-2 bg-white/10 hover:bg-white/20 px-3 py-1 rounded-full text-[11px] font-extrabold tracking-wide backdrop-blur-sm transition-colors border border-white/15 cursor-pointer max-w-full"
+                  >
+                    <span className="w-1.5 h-1.5 rounded-full bg-amber-400 animate-ping shrink-0"></span>
+                    <span className="text-amber-300 whitespace-nowrap uppercase">{lang === 'vi' ? 'MỚI NHẤT:' : 'LATEST:'}</span>
+                    <span className="truncate max-w-[200px] sm:max-w-xs md:max-w-md font-semibold text-white/95">{NEWS_ARTICLES[0].title}</span>
                   </div>
 
-                  <h2 className="text-xl sm:text-2xl md:text-3xl font-black leading-tight tracking-tight">
-                    {lang === 'vi' ? 'Tiên Phong Khoa Học Xây Dựng & Kiểm Định Công Trình Hàng Đầu' : 'Pioneering Construction Science & Engineering Inspection'}
+                  <h2 className="text-xl sm:text-2xl xl:text-[26px] font-black leading-tight tracking-tight">
+                    {lang === 'vi' ? 'Tiên Phong Khoa Học Xây Dựng & Kiểm Định Công Trình Trọng Điểm' : 'Pioneering Construction Science & National Engineering Inspection'}
                   </h2>
                   
-                  <p className="text-2xs sm:text-xs text-white/80 leading-relaxed font-medium max-w-xl">
+                  <p className="text-xs text-white/85 leading-relaxed font-medium max-w-2xl">
                     {lang === 'vi'
-                      ? 'Đơn vị sự nghiệp Khoa học Công nghệ Hạng I thuộc Bộ Xây dựng. Thực hiện nghiên cứu nền tảng, soát xét quy chuẩn Việt Nam và kiểm định độc lập chất lượng các công trình trọng điểm Quốc gia như Cảng hàng không Long Thành, Nhà Quốc hội, Thủy điện Sơn La.'
+                      ? 'Đơn vị sự nghiệp Khoa học Công nghệ Hạng I trực thuộc Bộ Xây dựng. Chủ trì nghiên cứu nền tảng, biên soạn hệ thống Quy chuẩn - Tiêu chuẩn Quốc gia (QCVN/TCVN) và kiểm định độc lập chất lượng các đại dự án: Sân bay Long Thành, Nhà Quốc hội, Thủy điện Sơn La.'
                       : 'The leading Class-I national science and technology research institution under the Ministry of Construction. Responsible for building codes, standard drafting, and independent safety audits for strategic national projects.'}
                   </p>
+
+                  {/* Quick Popular Keywords / Tags (Kiểu Mua Sắm Công) */}
+                  <div className="pt-0.5 flex flex-wrap items-center gap-1.5">
+                    <span className="text-[11px] font-bold text-amber-300/90 mr-0.5">
+                      {lang === 'vi' ? 'Tra cứu phổ biến:' : 'Popular:'}
+                    </span>
+                    {[
+                      { label: 'QCVN 06:2026 PCCC', action: () => { handleTabChange('state-gov', 'quy-chuan-tieu-chuan'); setSelectedStandard('qcvn06'); } },
+                      { label: 'QCVN 16:2023 VLXD', action: () => { handleTabChange('state-gov', 'quy-chuan-tieu-chuan'); setSelectedStandard('qcvn16'); } },
+                      { label: 'Thử nghiệm LAS-XD', action: () => handleTabChange('intro', 'phong-lab') },
+                      { label: 'Kiểm định Long Thành', action: () => handleViewArticle(NEWS_ARTICLES[1]) },
+                      { label: 'Bê tông UHPC', action: () => handleTabChange('consulting', 'san-pham') },
+                    ].map((tag, i) => (
+                      <button
+                        key={i}
+                        onClick={tag.action}
+                        className="px-2.5 py-0.5 rounded-full text-[10px] font-semibold bg-white/10 hover:bg-amber-500 hover:text-slate-950 text-white/90 border border-white/15 transition-all cursor-pointer"
+                      >
+                        {tag.label}
+                      </button>
+                    ))}
+                  </div>
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-3 mt-6 relative z-10">
-                  <button onClick={() => handleTabChange('intro', 'all')} className="flex items-center justify-center gap-1.5 bg-white hover:bg-white/95 text-primary-900 px-5 py-3 rounded-xl text-2xs font-black shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
-                    <ShieldCheck size={14} className="text-primary-600" />
+                <div className="flex flex-col sm:flex-row gap-2.5 mt-4 relative z-10">
+                  <button onClick={() => handleTabChange('intro', 'all')} className="flex items-center justify-center gap-2 bg-amber-400 hover:bg-amber-300 text-slate-950 px-4 py-2.5 rounded-xl text-xs font-black shadow-md hover:shadow-lg transition-all hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
+                    <ShieldCheck size={15} className="text-slate-900" />
                     {lang === 'vi' ? 'Hồ sơ năng lực Viện' : 'Explore Capabilities'}
                   </button>
-                  <button onClick={() => handleTabChange('research')} className="flex items-center justify-center gap-1.5 border border-white/20 hover:bg-white/10 hover:border-white/40 text-white px-5 py-3 rounded-xl text-2xs font-bold backdrop-blur-sm transition-all hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
-                    <BookOpen size={14} />
-                    {lang === 'vi' ? 'Cơ sở dữ liệu đề tài' : 'R&D Databases'}
+                  <button onClick={() => handleTabChange('research')} className="flex items-center justify-center gap-2 bg-white/10 border border-white/25 hover:bg-white/20 hover:border-white/40 text-white px-4 py-2.5 rounded-xl text-xs font-bold backdrop-blur-sm transition-all hover:-translate-y-0.5 active:translate-y-0 cursor-pointer">
+                    <BookOpen size={15} />
+                    {lang === 'vi' ? 'Cơ sở dữ liệu đề tài KH&CN' : 'R&D Databases'}
                   </button>
                 </div>
               </div>
 
               {/* Right Column: Dynamic Photo Showcase Slider */}
-              <div className="lg:col-span-5 relative rounded-2xl overflow-hidden border border-border shadow-card h-[320px] lg:h-auto flex flex-col justify-end">
+              <div className="lg:col-span-5 relative rounded-2xl overflow-hidden border border-border shadow-card min-h-[250px] lg:h-auto flex flex-col justify-end group">
                 {/* Slides image wrap */}
                 <div className="absolute inset-0 bg-muted overflow-hidden">
                   {slides.map((slide, idx) => (
@@ -1190,21 +1302,21 @@ export default function App() {
                         currentSlide === idx ? "opacity-100 z-10" : "opacity-0 z-0"
                       )}
                     >
-                      <img src={slide.url} alt={slide.captionVi} className="object-cover w-full h-full transform scale-105 transition-transform duration-500 hover:scale-100" />
-                      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/30 to-transparent"></div>
+                      <img src={slide.url} alt={slide.captionVi} className="object-cover w-full h-full transform scale-105 transition-transform duration-700 group-hover:scale-100" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950/90 via-slate-950/35 to-transparent"></div>
                     </div>
                   ))}
                 </div>
 
                 {/* Slides navigation dots */}
-                <div className="absolute top-4 right-4 z-20 flex gap-1.5 bg-black/35 backdrop-blur-sm px-2.5 py-1.5 rounded-full border border-white/10">
+                <div className="absolute top-3.5 right-3.5 z-20 flex gap-1.5 bg-black/45 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/15">
                   {slides.map((_, idx) => (
                     <button
                       key={idx}
                       onClick={() => setCurrentSlide(idx)}
                       className={cn(
-                        "w-2 h-2 rounded-full transition-all cursor-pointer",
-                        currentSlide === idx ? "bg-white w-4" : "bg-white/40"
+                        "h-1.5 rounded-full transition-all cursor-pointer",
+                        currentSlide === idx ? "bg-amber-400 w-4" : "bg-white/50 w-1.5 hover:bg-white/80"
                       )}
                       title={`Slide ${idx + 1}`}
                     />
@@ -1212,11 +1324,11 @@ export default function App() {
                 </div>
 
                 {/* Active slide text overlay */}
-                <div className="p-5 text-left relative z-20 text-white space-y-1">
-                  <span className="inline-block px-2 py-0.5 rounded text-[8px] font-extrabold bg-primary-500 uppercase tracking-widest text-white shadow-sm">
-                    {lang === 'vi' ? 'Hoạt động tiêu biểu' : 'Highlight'}
+                <div className="p-4 md:p-5 text-left relative z-20 text-white space-y-1.5">
+                  <span className="inline-block px-2 py-0.5 rounded-md text-[10px] font-extrabold bg-primary-500 uppercase tracking-wider text-white shadow-xs">
+                    {lang === 'vi' ? 'Hoạt động tiêu biểu' : 'Featured Highlight'}
                   </span>
-                  <h4 className="font-bold text-xs sm:text-sm text-white drop-shadow-md">
+                  <h4 className="font-extrabold text-xs sm:text-sm text-white drop-shadow-md leading-snug">
                     {lang === 'vi' ? slides[currentSlide].captionVi : slides[currentSlide].captionEn}
                   </h4>
                 </div>
@@ -1224,61 +1336,61 @@ export default function App() {
             </div>
 
             {/* Quick KPI stats with custom glassmorphism containers & soft gradient backgrounds */}
-            <div className="bg-muted/30 dark:bg-muted/10 p-3 rounded-[28px] border border-border-subtle backdrop-blur-sm shadow-inner">
-              <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            <div className="bg-surface/80 p-3 rounded-2xl border border-border shadow-card">
+              <div className="grid grid-cols-2 lg:grid-cols-4 gap-3.5">
                 {[
                   {
                     value: '21',
                     labelVi: 'Đơn vị trực thuộc',
-                    labelEn: 'Departments',
-                    icon: <Layers size={22} />,
-                    bg: 'bg-teal-500/10 text-teal-600 dark:text-teal-400 border-teal-500/10',
-                    grad: 'from-teal-500 to-emerald-600',
-                    cardBg: 'from-teal-500/[0.03] to-teal-500/[0.08] dark:from-teal-950/20 dark:to-teal-950/30 border-teal-500/15 hover:border-teal-500/40'
+                    labelEn: 'Departments & Centers',
+                    icon: <Layers size={18} />,
+                    bg: 'bg-teal-500/15 text-teal-600 dark:text-teal-400 border-teal-500/20',
+                    grad: 'from-teal-600 to-emerald-600 dark:from-teal-400 dark:to-emerald-400',
+                    cardBg: 'from-teal-500/[0.04] to-teal-500/[0.09] dark:from-teal-950/25 dark:to-teal-950/35 border-teal-500/20 hover:border-teal-500/45'
                   },
                   {
                     value: '15+',
-                    labelVi: 'Phòng thí nghiệm',
-                    labelEn: 'Labs (LAS-XD)',
-                    icon: <Wrench size={22} />,
-                    bg: 'bg-emerald-500/10 text-emerald-600 dark:text-emerald-400 border-emerald-500/10',
-                    grad: 'from-emerald-500 to-teal-600',
-                    cardBg: 'from-emerald-500/[0.03] to-emerald-500/[0.08] dark:from-emerald-950/20 dark:to-emerald-950/30 border-emerald-500/15 hover:border-emerald-500/40'
+                    labelVi: 'Phòng thí nghiệm LAS-XD',
+                    labelEn: 'VILAS / LAS-XD Labs',
+                    icon: <Wrench size={18} />,
+                    bg: 'bg-emerald-500/15 text-emerald-600 dark:text-emerald-400 border-emerald-500/20',
+                    grad: 'from-emerald-600 to-teal-600 dark:from-emerald-400 dark:to-teal-400',
+                    cardBg: 'from-emerald-500/[0.04] to-emerald-500/[0.09] dark:from-emerald-950/25 dark:to-emerald-950/35 border-emerald-500/20 hover:border-emerald-500/45'
                   },
                   {
                     value: '120+',
                     labelVi: 'Đề tài đã nghiệm thu',
-                    labelEn: 'Approved Topics',
-                    icon: <BookOpen size={22} />,
-                    bg: 'bg-indigo-500/10 text-indigo-600 dark:text-indigo-400 border-indigo-500/10',
-                    grad: 'from-indigo-500 to-blue-600',
-                    cardBg: 'from-indigo-500/[0.03] to-indigo-500/[0.08] dark:from-indigo-950/20 dark:to-indigo-950/30 border-indigo-500/15 hover:border-indigo-500/40'
+                    labelEn: 'Completed R&D Topics',
+                    icon: <BookOpen size={18} />,
+                    bg: 'bg-indigo-500/15 text-indigo-600 dark:text-indigo-400 border-indigo-500/20',
+                    grad: 'from-indigo-600 to-blue-600 dark:from-indigo-400 dark:to-blue-400',
+                    cardBg: 'from-indigo-500/[0.04] to-indigo-500/[0.09] dark:from-indigo-950/25 dark:to-indigo-950/35 border-indigo-500/20 hover:border-indigo-500/45'
                   },
                   {
                     value: '15',
-                    labelVi: 'Dự án trọng điểm QG',
-                    labelEn: 'National Projects',
-                    icon: <Award size={22} />,
-                    bg: 'bg-rose-500/10 text-rose-600 dark:text-rose-400 border-rose-500/10',
-                    grad: 'from-rose-500 to-pink-600',
-                    cardBg: 'from-rose-500/[0.03] to-rose-500/[0.08] dark:from-rose-950/20 dark:to-rose-950/30 border-rose-500/15 hover:border-rose-500/40'
+                    labelVi: 'Dự án trọng điểm Quốc gia',
+                    labelEn: 'National Key Projects',
+                    icon: <Award size={18} />,
+                    bg: 'bg-rose-500/15 text-rose-600 dark:text-rose-400 border-rose-500/20',
+                    grad: 'from-rose-600 to-amber-600 dark:from-rose-400 dark:to-amber-400',
+                    cardBg: 'from-rose-500/[0.04] to-rose-500/[0.09] dark:from-rose-950/25 dark:to-rose-950/35 border-rose-500/20 hover:border-rose-500/45'
                   }
                 ].map((stat, idx) => (
                   <div 
                     key={idx} 
                     className={cn(
-                      "group card p-5 flex items-center gap-4 hover:shadow-card-hover border hover:-translate-y-1 transition-all duration-300 bg-gradient-to-br shadow-sm cursor-default",
+                      "group card p-3.5 flex items-center gap-3 hover:shadow-card-hover border hover:-translate-y-0.5 transition-all duration-300 bg-gradient-to-br shadow-xs cursor-default",
                       stat.cardBg
                     )}
                   >
-                    <div className={cn("w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 transition-transform duration-500 group-hover:scale-110 shadow-inner border", stat.bg)}>
+                    <div className={cn("w-10 h-10 rounded-xl flex items-center justify-center shrink-0 transition-transform duration-300 group-hover:scale-105 shadow-inner border", stat.bg)}>
                       {stat.icon}
                     </div>
                     <div className="text-left min-w-0">
                       <p className={cn("text-lg sm:text-xl font-black leading-none bg-gradient-to-r bg-clip-text text-transparent", stat.grad)}>
                         {stat.value}
                       </p>
-                      <p className="text-[9px] text-ink-muted uppercase font-black tracking-wider leading-tight mt-1 group-hover:text-primary-500 transition-colors">
+                      <p className="text-[10px] xl:text-[11px] text-ink-secondary uppercase font-extrabold tracking-wide leading-snug mt-1 group-hover:text-primary-500 transition-colors">
                         {lang === 'vi' ? stat.labelVi : stat.labelEn}
                       </p>
                     </div>
@@ -1288,20 +1400,20 @@ export default function App() {
             </div>
 
             {/* Lĩnh vực chuyên môn trọng tâm */}
-            <div className="space-y-4 text-left">
-              <div className="border-b border-border pb-3 flex justify-between items-end">
+            <div className="space-y-3.5 text-left">
+              <div className="border-b border-border pb-2.5 flex justify-between items-end">
                 <div>
-                  <h3 className="text-sm font-black text-ink uppercase tracking-wider flex items-center gap-2">
-                    <Layers size={14} className="text-primary-500" />
+                  <h3 className="text-sm sm:text-base font-black text-ink uppercase tracking-wide flex items-center gap-2">
+                    <Layers size={15} className="text-primary-500" />
                     {lang === 'vi' ? 'Lĩnh vực hoạt động chuyên môn' : 'Core Competencies & Services'}
                   </h3>
-                  <p className="text-3xs text-ink-muted font-bold uppercase mt-1">
-                    {lang === 'vi' ? 'Năng lực cốt lõi phục vụ ngành xây dựng Việt Nam' : 'Key capabilities serving the Vietnam construction industry'}
+                  <p className="text-[11px] text-ink-muted font-semibold mt-0.5">
+                    {lang === 'vi' ? 'Năng lực cốt lõi phục vụ quản lý nhà nước và ngành xây dựng Việt Nam' : 'Key capabilities serving the Vietnam construction industry'}
                   </p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-3.5">
                 {[
                   {
                     titleVi: 'Nghiên cứu & Soạn thảo Quy chuẩn',
@@ -1349,19 +1461,19 @@ export default function App() {
                     <div 
                       key={idx} 
                       onClick={() => handleTabChange(item.tab, item.subTab)}
-                      className="group relative rounded-2xl overflow-hidden border border-border bg-surface shadow-card hover:shadow-card-hover transition-all duration-300 cursor-pointer h-48 flex flex-col justify-end text-left"
+                      className="group relative rounded-2xl overflow-hidden border border-border bg-surface shadow-card hover:shadow-card-hover transition-all duration-300 cursor-pointer h-44 xl:h-48 flex flex-col justify-end text-left"
                     >
                       <div className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105" style={{ backgroundImage: `url(${item.image})` }}></div>
-                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/70 to-slate-900/10 group-hover:from-slate-950 transition-colors"></div>
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/75 to-slate-900/15 group-hover:from-slate-950 transition-colors"></div>
                       
                       <div className="relative z-10 p-4 space-y-1.5 text-white">
-                        <div className="w-8 h-8 rounded-lg bg-primary-500/20 backdrop-blur-md border border-white/10 flex items-center justify-center text-primary-400 group-hover:bg-primary-500 group-hover:text-white transition-all duration-300">
+                        <div className="w-8 h-8 rounded-lg bg-primary-500/25 backdrop-blur-md border border-white/15 flex items-center justify-center text-amber-300 group-hover:bg-primary-500 group-hover:text-white transition-all duration-300">
                           <Icon size={16} />
                         </div>
-                        <h4 className="font-extrabold text-2xs md:text-xs text-white group-hover:text-primary-400 transition-colors">
+                        <h4 className="font-extrabold text-xs sm:text-[13px] text-white group-hover:text-amber-300 transition-colors leading-snug">
                           {lang === 'vi' ? item.titleVi : item.titleEn}
                         </h4>
-                        <p className="text-[10px] text-white/70 line-clamp-2 leading-relaxed font-semibold">
+                        <p className="text-[11px] text-white/80 line-clamp-2 leading-relaxed font-medium">
                           {lang === 'vi' ? item.descVi : item.descEn}
                         </p>
                       </div>
@@ -1374,68 +1486,78 @@ export default function App() {
             {/* Tin nổi bật trang chủ */}
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               <div className="lg:col-span-2 space-y-4">
-                <h3 className="text-sm font-black text-ink uppercase tracking-wider flex items-center gap-2">
-                  <Activity size={14} className="text-primary-500" />
-                  {lang === 'vi' ? 'Tin hoạt động & Nghiệm thu mới' : 'Latest Activities & Approvals'}
-                </h3>
+                <div className="flex items-center justify-between border-b border-border pb-2.5">
+                  <h3 className="text-base font-black text-ink uppercase tracking-wide flex items-center gap-2">
+                    <Activity size={16} className="text-primary-500" />
+                    {lang === 'vi' ? 'Tin hoạt động & Nghiệm thu mới' : 'Latest Activities & Approvals'}
+                  </h3>
+                  <button
+                    onClick={() => handleTabChange('news', 'all')}
+                    className="text-xs font-extrabold text-primary-500 hover:underline flex items-center gap-1 cursor-pointer"
+                  >
+                    {lang === 'vi' ? 'Xem tất cả' : 'View all'} <ChevronRight size={13} />
+                  </button>
+                </div>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {[NEWS_ARTICLES[5], NEWS_ARTICLES[6], NEWS_ARTICLES[7], NEWS_ARTICLES[0]].map((art) => (
                     <div 
                       key={art.id} 
                       onClick={() => handleViewArticle(art)} 
-                      className="group card overflow-hidden hover:shadow-card-hover hover:border-primary-300 transition-all duration-300 cursor-pointer flex flex-col justify-between text-left animate-fade-in"
+                      className="group card overflow-hidden hover:shadow-card-hover hover:border-primary-400 transition-all duration-300 cursor-pointer flex flex-col justify-between text-left animate-fade-in"
                     >
                       <div>
-                        <div className="h-40 overflow-hidden relative">
+                        <div className="h-44 overflow-hidden relative">
                           <img src={art.image} alt={art.title} className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105" />
                           <div className="absolute top-3 left-3">
-                            <span className="inline-block px-2.5 py-1 rounded-lg text-[9px] font-extrabold uppercase bg-primary-600/90 text-white backdrop-blur-sm border border-white/10 shadow-sm">
+                            <span className="inline-block px-2.5 py-1 rounded-lg text-[10px] font-extrabold uppercase bg-primary-600/95 text-white backdrop-blur-sm border border-white/15 shadow-sm">
                               {art.category === 'tin-hoat-dong' ? 'Tin hoạt động' : 'Dự án trọng điểm'}
                             </span>
                           </div>
                         </div>
                         <div className="p-4 space-y-2">
-                          <h4 className="font-bold text-ink text-xs line-clamp-2 group-hover:text-primary-500 transition-colors leading-snug">
+                          <h4 className="font-bold text-ink text-[13.5px] line-clamp-2 group-hover:text-primary-500 transition-colors leading-snug">
                             {art.title}
                           </h4>
-                          <p className="text-2xs text-ink-secondary line-clamp-2 leading-relaxed font-semibold">
+                          <p className="text-xs text-ink-secondary line-clamp-2 leading-relaxed font-medium">
                             {art.summary}
                           </p>
                         </div>
                       </div>
-                      <div className="px-4 pb-4 pt-2 flex items-center justify-between text-[10px] text-ink-muted border-t border-border-subtle font-semibold">
-                        <span className="truncate max-w-[100px]">{art.author}</span>
-                        <span className="flex items-center gap-1.5"><Calendar size={11} /> {art.date}</span>
+                      <div className="px-4 pb-4 pt-2.5 flex items-center justify-between text-xs text-ink-muted border-t border-border-subtle font-semibold">
+                        <span className="truncate max-w-[140px]">{art.author}</span>
+                        <span className="flex items-center gap-1.5"><Calendar size={12} /> {art.date}</span>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Cột Bên Phải: Tin tức mới & Tin tức nổi bật như bên web cũ */}
-              <div className="space-y-6 text-left">
+              {/* Cột Bên Phải: Tin tức mới & Tin tức nổi bật */}
+              <div className="space-y-5 text-left">
                 
                 {/* WIDGET 1: TIN TỨC MỚI */}
-                <div className="space-y-2.5">
-                  <h3 className="text-2xs sm:text-xs font-black text-ink uppercase tracking-wider flex items-center gap-1.5 pb-1 border-b border-border-subtle">
-                    <Activity size={12} className="text-primary-500" />
-                    {lang === 'vi' ? 'Tin tức mới' : 'Latest News'}
+                <div className="card p-4 space-y-3">
+                  <h3 className="text-xs sm:text-sm font-black text-ink uppercase tracking-wide flex items-center gap-2 pb-2 border-b border-border-subtle">
+                    <Activity size={14} className="text-primary-500" />
+                    {lang === 'vi' ? 'Thông báo & Tin mới' : 'Latest News'}
                   </h3>
-                  <div className="space-y-2">
+                  <div className="space-y-2.5">
                     {[NEWS_ARTICLES[4], NEWS_ARTICLES[2], NEWS_ARTICLES[3], NEWS_ARTICLES[10], NEWS_ARTICLES[11]].map((art) => (
                       <div 
                         key={art.id} 
                         onClick={() => handleViewArticle(art)}
-                        className="group flex gap-2.5 items-start cursor-pointer hover:bg-muted/40 p-1.5 rounded-xl transition-all duration-300"
+                        className="group flex gap-3 items-start cursor-pointer hover:bg-muted/60 p-2 rounded-xl transition-all duration-200"
                       >
-                        <div className="w-12 h-9 rounded-lg overflow-hidden shrink-0 bg-muted border border-border-subtle">
+                        <div className="w-16 h-12 rounded-lg overflow-hidden shrink-0 bg-muted border border-border-subtle">
                           <img src={art.image} alt={art.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-extrabold text-[10px] text-ink group-hover:text-primary-500 transition-colors leading-tight line-clamp-2">
+                          <h4 className="font-bold text-xs text-ink group-hover:text-primary-500 transition-colors leading-snug line-clamp-2">
                             {art.title}
                           </h4>
-                          <span className="text-[8px] text-ink-muted font-bold block mt-0.5">{art.date}</span>
+                          <span className="text-[11px] text-ink-muted font-semibold flex items-center gap-1 mt-1">
+                            <Calendar size={10} /> {art.date}
+                          </span>
                         </div>
                       </div>
                     ))}
@@ -1443,26 +1565,28 @@ export default function App() {
                 </div>
 
                 {/* WIDGET 2: TIN TỨC NỔI BẬT */}
-                <div className="space-y-2.5">
-                  <h3 className="text-2xs sm:text-xs font-black text-ink uppercase tracking-wider flex items-center gap-1.5 pb-1 border-b border-border-subtle">
-                    <Award size={12} className="text-primary-500" />
-                    {lang === 'vi' ? 'Tin tức nổi bật' : 'Featured News'}
+                <div className="card p-4 space-y-3">
+                  <h3 className="text-xs sm:text-sm font-black text-ink uppercase tracking-wide flex items-center gap-2 pb-2 border-b border-border-subtle">
+                    <Award size={14} className="text-amber-500" />
+                    {lang === 'vi' ? 'Tiêu điểm Khoa học' : 'Featured News'}
                   </h3>
-                  <div className="space-y-2">
-                    {[NEWS_ARTICLES[1], NEWS_ARTICLES[8], NEWS_ARTICLES[9], NEWS_ARTICLES[0], NEWS_ARTICLES[2]].map((art) => (
+                  <div className="space-y-2.5">
+                    {[NEWS_ARTICLES[1], NEWS_ARTICLES[8], NEWS_ARTICLES[9], NEWS_ARTICLES[0]].map((art) => (
                       <div 
                         key={art.id} 
                         onClick={() => handleViewArticle(art)}
-                        className="group flex gap-2.5 items-start cursor-pointer hover:bg-muted/40 p-1.5 rounded-xl transition-all duration-300"
+                        className="group flex gap-3 items-start cursor-pointer hover:bg-muted/60 p-2 rounded-xl transition-all duration-200"
                       >
-                        <div className="w-12 h-9 rounded-lg overflow-hidden shrink-0 bg-muted border border-border-subtle">
+                        <div className="w-16 h-12 rounded-lg overflow-hidden shrink-0 bg-muted border border-border-subtle">
                           <img src={art.image} alt={art.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
                         </div>
                         <div className="flex-1 min-w-0">
-                          <h4 className="font-extrabold text-[10px] text-ink group-hover:text-primary-500 transition-colors leading-tight line-clamp-2">
+                          <h4 className="font-bold text-xs text-ink group-hover:text-primary-500 transition-colors leading-snug line-clamp-2">
                             {art.title}
                           </h4>
-                          <span className="text-[8px] text-ink-muted font-bold block mt-0.5">{art.date}</span>
+                          <span className="text-[11px] text-ink-muted font-semibold flex items-center gap-1 mt-1">
+                            <Calendar size={10} /> {art.date}
+                          </span>
                         </div>
                       </div>
                     ))}
@@ -1474,22 +1598,22 @@ export default function App() {
             {/* ─── HOẠT ĐỘNG KHOA HỌC & ĐÀO TẠO CHUYÊN SÂU (ADVANCED R&D SECTION) ─── */}
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch border-t border-border-subtle pt-6">
               {/* Cột Trái: Bộ Tra Cứu Quy Chuẩn & Tiêu Chuẩn Quốc Gia */}
-              <div className="lg:col-span-5 flex flex-col justify-between p-6 bg-surface hover:shadow-card-hover border border-border rounded-2xl transition-all duration-300 text-left relative overflow-hidden group">
+              <div className="lg:col-span-5 flex flex-col justify-between p-6 bg-surface shadow-card hover:shadow-card-hover border border-border rounded-2xl transition-all duration-300 text-left relative overflow-hidden group">
                 <div className="space-y-5">
                   <div className="space-y-1">
-                    <h3 className="text-xs sm:text-sm font-black text-ink tracking-wide flex items-center gap-2">
-                      <div className="w-6 h-6 rounded-lg bg-primary-500/10 flex items-center justify-center text-primary-500 shrink-0">
-                        <FileText size={13} />
+                    <h3 className="text-sm sm:text-base font-black text-ink tracking-wide flex items-center gap-2.5">
+                      <div className="w-7 h-7 rounded-lg bg-primary-500/15 flex items-center justify-center text-primary-500 shrink-0">
+                        <FileText size={15} />
                       </div>
                       {lang === 'vi' ? 'Tra cứu nhanh Quy chuẩn - Tiêu chuẩn' : 'Standards & Codes Lookup'}
                     </h3>
-                    <p className="text-[10px] text-ink-muted font-bold uppercase tracking-wider pl-8">
-                      {lang === 'vi' ? 'Hệ thống quy chuẩn xây dựng do IBST chủ trì biên soạn' : 'Key regulations drafted and maintained by IBST'}
+                    <p className="text-xs text-ink-muted font-semibold pl-9">
+                      {lang === 'vi' ? 'Hệ thống quy chuẩn kỹ thuật quốc gia do IBST chủ trì biên soạn' : 'Key regulations drafted and maintained by IBST'}
                     </p>
                   </div>
 
                   {/* Danh sách các Quy chuẩn / Tiêu chuẩn để chọn nhanh (Segmented Control style) */}
-                  <div className="bg-muted/50 p-1 rounded-xl border border-border-subtle grid grid-cols-3 gap-1">
+                  <div className="bg-muted p-1 rounded-xl border border-border grid grid-cols-3 gap-1">
                     {[
                       { id: 'qcvn06', label: 'QCVN 06:2026' },
                       { id: 'qcvn16', label: 'QCVN 16:2023' },
@@ -1499,10 +1623,10 @@ export default function App() {
                         key={std.id}
                         onClick={() => setSelectedStandard(std.id)}
                         className={cn(
-                          "py-2 text-[10px] font-extrabold rounded-lg text-center transition-all cursor-pointer",
+                          "py-2 text-xs font-extrabold rounded-lg text-center transition-all cursor-pointer",
                           selectedStandard === std.id
                             ? "bg-primary-500 text-white shadow-sm"
-                            : "text-ink-secondary hover:text-ink hover:bg-surface/50"
+                            : "text-ink-secondary hover:text-ink hover:bg-surface/60"
                         )}
                       >
                         {std.label}
@@ -1511,37 +1635,37 @@ export default function App() {
                   </div>
 
                   {/* Thẻ hiển thị chi tiết Quy chuẩn được chọn (High-tech Datasheet layout) */}
-                  <div className="relative pl-5 py-4 pr-4 bg-gradient-to-br from-surface to-primary-500/[0.02] border border-primary-500/15 rounded-xl space-y-3 shadow-inner overflow-hidden before:absolute before:left-0 before:top-4 before:bottom-4 before:w-1 before:bg-primary-500 before:rounded-r-lg">
-                    <div className="absolute top-0 right-0 w-24 h-24 bg-primary-500/[0.02] rounded-full blur-xl pointer-events-none"></div>
+                  <div className="relative pl-5 py-4 pr-4 bg-gradient-to-br from-surface to-primary-500/[0.03] border border-primary-500/20 rounded-xl space-y-3.5 shadow-inner overflow-hidden before:absolute before:left-0 before:top-4 before:bottom-4 before:w-1 before:bg-primary-500 before:rounded-r-lg">
+                    <div className="absolute top-0 right-0 w-24 h-24 bg-primary-500/[0.03] rounded-full blur-xl pointer-events-none"></div>
                     
                     {selectedStandard === 'qcvn06' && (
-                      <div className="space-y-3 text-left animate-fade-in">
+                      <div className="space-y-3.5 text-left animate-fade-in">
                         <div className="flex flex-wrap items-center justify-between gap-2">
-                          <span className="text-[9px] font-black text-primary-500 uppercase tracking-widest">Quy chuẩn phòng cháy</span>
-                          <span className="px-2 py-0.5 rounded-md text-[8px] font-extrabold uppercase bg-amber-500/10 text-amber-600 border border-amber-500/10 flex items-center gap-1">
+                          <span className="text-[11px] font-black text-primary-500 uppercase tracking-wider">Quy chuẩn phòng cháy</span>
+                          <span className="px-2.5 py-0.5 rounded-md text-[10px] font-extrabold uppercase bg-amber-500/15 text-amber-600 dark:text-amber-400 border border-amber-500/25 flex items-center gap-1.5">
                             <span className="w-1.5 h-1.5 rounded-full bg-amber-500 animate-pulse"></span>
                             {lang === 'vi' ? 'Đang soát xét 2026' : 'Under Revision'}
                           </span>
                         </div>
-                        <h4 className="font-extrabold text-[12px] text-ink leading-snug">QCVN 06:2026/BXD - Quy chuẩn quốc gia về An toàn cháy cho nhà và công trình</h4>
-                        <p className="text-2xs text-ink-secondary leading-relaxed font-semibold">Quy định các yêu cầu bắt buộc về an toàn cháy đối với nhà và công trình xây dựng khi thiết kế, xây dựng mới hoặc cải tạo tại Việt Nam.</p>
+                        <h4 className="font-extrabold text-sm text-ink leading-snug">QCVN 06:2026/BXD - Quy chuẩn quốc gia về An toàn cháy cho nhà và công trình</h4>
+                        <p className="text-xs text-ink-secondary leading-relaxed font-medium">Quy định các yêu cầu bắt buộc về an toàn cháy đối với nhà và công trình xây dựng khi thiết kế, xây dựng mới hoặc cải tạo tại Việt Nam.</p>
                         
                         <div className="grid grid-cols-2 gap-3 pt-3 border-t border-border-subtle">
-                          <div className="p-2.5 bg-muted/30 border border-border-subtle rounded-xl space-y-1">
-                            <span className="text-[9px] text-ink-muted uppercase font-black tracking-wider block">Cơ quan phê duyệt</span>
-                            <span className="text-[10px] text-ink font-bold block">{lang === 'vi' ? 'Bộ Xây dựng' : 'MOC Vietnam'}</span>
+                          <div className="p-3 bg-muted/40 border border-border rounded-xl space-y-1">
+                            <span className="text-[10px] text-ink-muted uppercase font-extrabold tracking-wider block">Cơ quan phê duyệt</span>
+                            <span className="text-xs text-ink font-black block">{lang === 'vi' ? 'Bộ Xây dựng' : 'MOC Vietnam'}</span>
                           </div>
-                          <div className="p-2.5 bg-muted/30 border border-border-subtle rounded-xl space-y-1">
-                            <span className="text-[9px] text-ink-muted uppercase font-black tracking-wider block">Đối chiếu quốc tế</span>
-                            <span className="text-[10px] text-ink font-bold block">ISO 834, NFPA 101</span>
+                          <div className="p-3 bg-muted/40 border border-border rounded-xl space-y-1">
+                            <span className="text-[10px] text-ink-muted uppercase font-extrabold tracking-wider block">Đối chiếu quốc tế</span>
+                            <span className="text-xs text-ink font-black block">ISO 834, NFPA 101</span>
                           </div>
                         </div>
 
                         {/* Stepper Tiến độ biên soạn */}
-                        <div className="pt-3 border-t border-border-subtle space-y-2">
-                          <span className="text-[9px] text-ink-muted uppercase font-black tracking-wider block">{lang === 'vi' ? 'Tiến trình soát xét & Ban hành' : 'Drafting & Issuing Progress'}</span>
-                          <div className="flex items-center justify-between relative mt-1 px-2">
-                            <div className="absolute left-4 right-4 top-[8px] h-0.5 bg-muted z-0">
+                        <div className="pt-3 border-t border-border-subtle space-y-2.5">
+                          <span className="text-[11px] text-ink-muted uppercase font-extrabold tracking-wider block">{lang === 'vi' ? 'Tiến trình soát xét & Ban hành' : 'Drafting & Issuing Progress'}</span>
+                          <div className="flex items-center justify-between relative mt-2 px-2">
+                            <div className="absolute left-5 right-5 top-[11px] h-0.5 bg-muted z-0">
                               <div className="h-full bg-primary-500 transition-all duration-500" style={{ width: '66%' }}></div>
                             </div>
                             {[
@@ -1552,16 +1676,16 @@ export default function App() {
                             ].map((step, idx) => (
                               <div key={idx} className="flex flex-col items-center relative z-10">
                                 <div className={cn(
-                                  "w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-black border transition-all",
-                                  step.status === 'done' && "bg-primary-500 text-white border-primary-500",
-                                  step.status === 'active' && "bg-surface text-primary-500 border-primary-500 ring-2 ring-primary-500/20 animate-pulse",
+                                  "w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-black border transition-all",
+                                  step.status === 'done' && "bg-primary-500 text-white border-primary-500 shadow-xs",
+                                  step.status === 'active' && "bg-surface text-primary-500 border-primary-500 ring-2 ring-primary-500/25 animate-pulse",
                                   step.status === 'pending' && "bg-surface text-ink-muted border-border"
                                 )}>
                                   {step.status === 'done' ? '✓' : idx + 1}
                                 </div>
                                 <span className={cn(
-                                  "text-[8px] font-bold mt-1 scale-90 sm:scale-100",
-                                  step.status === 'pending' ? "text-ink-muted" : "text-ink-secondary"
+                                  "text-[11px] font-bold mt-1.5",
+                                  step.status === 'pending' ? "text-ink-muted" : "text-ink"
                                 )}>
                                   {lang === 'vi' ? step.labelVi : step.labelEn}
                                 </span>
@@ -1573,33 +1697,33 @@ export default function App() {
                     )}
 
                     {selectedStandard === 'qcvn16' && (
-                      <div className="space-y-3 text-left animate-fade-in">
+                      <div className="space-y-3.5 text-left animate-fade-in">
                         <div className="flex flex-wrap items-center justify-between gap-2">
-                          <span className="text-[9px] font-black text-primary-500 uppercase tracking-widest">Quy chuẩn vật liệu</span>
-                          <span className="px-2 py-0.5 rounded-md text-[8px] font-extrabold uppercase bg-success-500/10 text-success-600 border border-success-500/10 flex items-center gap-1">
+                          <span className="text-[11px] font-black text-primary-500 uppercase tracking-wider">Quy chuẩn vật liệu</span>
+                          <span className="px-2.5 py-0.5 rounded-md text-[10px] font-extrabold uppercase bg-success-500/15 text-success-600 dark:text-success-400 border border-success-500/25 flex items-center gap-1.5">
                             <span className="w-1.5 h-1.5 rounded-full bg-success-500"></span>
                             {lang === 'vi' ? 'Đang có hiệu lực' : 'Active'}
                           </span>
                         </div>
-                        <h4 className="font-extrabold text-[12px] text-ink leading-snug">QCVN 16:2023/BXD - Quy chuẩn quốc gia về Sản phẩm, hàng hóa vật liệu xây dựng</h4>
-                        <p className="text-2xs text-ink-secondary leading-relaxed font-semibold">Quy định các giới hạn đặc tính kỹ thuật và yêu cầu quản lý chất lượng các nhóm sản phẩm xi măng, phụ gia, kính xây dựng, vật liệu lợp...</p>
+                        <h4 className="font-extrabold text-sm text-ink leading-snug">QCVN 16:2023/BXD - Quy chuẩn quốc gia về Sản phẩm, hàng hóa vật liệu xây dựng</h4>
+                        <p className="text-xs text-ink-secondary leading-relaxed font-medium">Quy định các giới hạn đặc tính kỹ thuật và yêu cầu quản lý chất lượng các nhóm sản phẩm xi măng, phụ gia, kính xây dựng, vật liệu lợp...</p>
                         
                         <div className="grid grid-cols-2 gap-3 pt-3 border-t border-border-subtle">
-                          <div className="p-2.5 bg-muted/30 border border-border-subtle rounded-xl space-y-1">
-                            <span className="text-[9px] text-ink-muted uppercase font-black tracking-wider block">Cơ quan phê duyệt</span>
-                            <span className="text-[10px] text-ink font-bold block">{lang === 'vi' ? 'Bộ Xây dựng' : 'MOC Vietnam'}</span>
+                          <div className="p-3 bg-muted/40 border border-border rounded-xl space-y-1">
+                            <span className="text-[10px] text-ink-muted uppercase font-extrabold tracking-wider block">Cơ quan phê duyệt</span>
+                            <span className="text-xs text-ink font-black block">{lang === 'vi' ? 'Bộ Xây dựng' : 'MOC Vietnam'}</span>
                           </div>
-                          <div className="p-2.5 bg-muted/30 border border-border-subtle rounded-xl space-y-1">
-                            <span className="text-[9px] text-ink-muted uppercase font-black tracking-wider block">Đối chiếu quốc tế</span>
-                            <span className="text-[10px] text-ink font-bold block">EN, ASTM</span>
+                          <div className="p-3 bg-muted/40 border border-border rounded-xl space-y-1">
+                            <span className="text-[10px] text-ink-muted uppercase font-extrabold tracking-wider block">Đối chiếu quốc tế</span>
+                            <span className="text-xs text-ink font-black block">EN, ASTM</span>
                           </div>
                         </div>
 
                         {/* Stepper Tiến độ biên soạn */}
-                        <div className="pt-3 border-t border-border-subtle space-y-2">
-                          <span className="text-[9px] text-ink-muted uppercase font-black tracking-wider block">{lang === 'vi' ? 'Tiến trình soát xét & Ban hành' : 'Drafting & Issuing Progress'}</span>
-                          <div className="flex items-center justify-between relative mt-1 px-2">
-                            <div className="absolute left-4 right-4 top-[8px] h-0.5 bg-muted z-0">
+                        <div className="pt-3 border-t border-border-subtle space-y-2.5">
+                          <span className="text-[11px] text-ink-muted uppercase font-extrabold tracking-wider block">{lang === 'vi' ? 'Tiến trình soát xét & Ban hành' : 'Drafting & Issuing Progress'}</span>
+                          <div className="flex items-center justify-between relative mt-2 px-2">
+                            <div className="absolute left-5 right-5 top-[11px] h-0.5 bg-muted z-0">
                               <div className="h-full bg-primary-500 transition-all duration-500" style={{ width: '100%' }}></div>
                             </div>
                             {[
@@ -1609,10 +1733,10 @@ export default function App() {
                               { labelVi: 'Ban hành', labelEn: 'Enacted', status: 'done' }
                             ].map((step, idx) => (
                               <div key={idx} className="flex flex-col items-center relative z-10">
-                                <div className="w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-black border bg-primary-500 text-white border-primary-500 shadow-sm">
+                                <div className="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-black border bg-primary-500 text-white border-primary-500 shadow-xs">
                                   ✓
                                 </div>
-                                <span className="text-[8px] font-bold mt-1 text-primary-500 scale-90 sm:scale-100">
+                                <span className="text-[11px] font-bold mt-1.5 text-primary-500">
                                   {lang === 'vi' ? step.labelVi : step.labelEn}
                                 </span>
                               </div>
@@ -1623,33 +1747,33 @@ export default function App() {
                     )}
 
                     {selectedStandard === 'tcvn9311' && (
-                      <div className="space-y-3 text-left animate-fade-in">
+                      <div className="space-y-3.5 text-left animate-fade-in">
                         <div className="flex flex-wrap items-center justify-between gap-2">
-                          <span className="text-[9px] font-black text-primary-500 uppercase tracking-widest">Tiêu chuẩn thử hỏa hoạn</span>
-                          <span className="px-2 py-0.5 rounded-md text-[8px] font-extrabold uppercase bg-success-500/10 text-success-600 border border-success-500/10 flex items-center gap-1">
+                          <span className="text-[11px] font-black text-primary-500 uppercase tracking-wider">Tiêu chuẩn thử hỏa hoạn</span>
+                          <span className="px-2.5 py-0.5 rounded-md text-[10px] font-extrabold uppercase bg-success-500/15 text-success-600 dark:text-success-400 border border-success-500/25 flex items-center gap-1.5">
                             <span className="w-1.5 h-1.5 rounded-full bg-success-500"></span>
                             {lang === 'vi' ? 'Đang có hiệu lực' : 'Active'}
                           </span>
                         </div>
-                        <h4 className="font-extrabold text-[12px] text-ink leading-snug">TCVN 9311-1:2012 - Thử nghiệm chịu lửa cho các bộ phận kết cấu công trình xây dựng</h4>
-                        <p className="text-2xs text-ink-secondary leading-relaxed font-semibold">Quy định quy trình xác định giới hạn chịu lửa của cấu kiện dầm, cột, sàn, tường ngăn khi tiếp xúc với lửa trong các điều kiện lò thử tiêu chuẩn.</p>
+                        <h4 className="font-extrabold text-sm text-ink leading-snug">TCVN 9311-1:2012 - Thử nghiệm chịu lửa cho các bộ phận kết cấu công trình xây dựng</h4>
+                        <p className="text-xs text-ink-secondary leading-relaxed font-medium">Quy định quy trình xác định giới hạn chịu lửa của cấu kiện dầm, cột, sàn, tường ngăn khi tiếp xúc với lửa trong các điều kiện lò thử tiêu chuẩn.</p>
                         
                         <div className="grid grid-cols-2 gap-3 pt-3 border-t border-border-subtle">
-                          <div className="p-2.5 bg-muted/30 border border-border-subtle rounded-xl space-y-1">
-                            <span className="text-[9px] text-ink-muted uppercase font-black tracking-wider block">Cơ quan biên soạn</span>
-                            <span className="text-[10px] text-ink font-bold block">{lang === 'vi' ? 'IBST Việt Nam' : 'IBST Vietnam'}</span>
+                          <div className="p-3 bg-muted/40 border border-border rounded-xl space-y-1">
+                            <span className="text-[10px] text-ink-muted uppercase font-extrabold tracking-wider block">Cơ quan biên soạn</span>
+                            <span className="text-xs text-ink font-black block">{lang === 'vi' ? 'IBST Việt Nam' : 'IBST Vietnam'}</span>
                           </div>
-                          <div className="p-2.5 bg-muted/30 border border-border-subtle rounded-xl space-y-1">
-                            <span className="text-[9px] text-ink-muted uppercase font-black tracking-wider block">Đối chiếu quốc tế</span>
-                            <span className="text-[10px] text-ink font-bold block">ISO 834-1:1999</span>
+                          <div className="p-3 bg-muted/40 border border-border rounded-xl space-y-1">
+                            <span className="text-[10px] text-ink-muted uppercase font-extrabold tracking-wider block">Đối chiếu quốc tế</span>
+                            <span className="text-xs text-ink font-black block">ISO 834-1:1999</span>
                           </div>
                         </div>
 
                         {/* Stepper Tiến độ biên soạn */}
-                        <div className="pt-3 border-t border-border-subtle space-y-2">
-                          <span className="text-[9px] text-ink-muted uppercase font-black tracking-wider block">{lang === 'vi' ? 'Tiến trình soát xét & Ban hành' : 'Drafting & Issuing Progress'}</span>
-                          <div className="flex items-center justify-between relative mt-1 px-2">
-                            <div className="absolute left-4 right-4 top-[8px] h-0.5 bg-muted z-0">
+                        <div className="pt-3 border-t border-border-subtle space-y-2.5">
+                          <span className="text-[11px] text-ink-muted uppercase font-extrabold tracking-wider block">{lang === 'vi' ? 'Tiến trình soát xét & Ban hành' : 'Drafting & Issuing Progress'}</span>
+                          <div className="flex items-center justify-between relative mt-2 px-2">
+                            <div className="absolute left-5 right-5 top-[11px] h-0.5 bg-muted z-0">
                               <div className="h-full bg-primary-500 transition-all duration-500" style={{ width: '100%' }}></div>
                             </div>
                             {[
@@ -1659,10 +1783,10 @@ export default function App() {
                               { labelVi: 'Ban hành', labelEn: 'Enacted', status: 'done' }
                             ].map((step, idx) => (
                               <div key={idx} className="flex flex-col items-center relative z-10">
-                                <div className="w-4 h-4 rounded-full flex items-center justify-center text-[8px] font-black border bg-primary-500 text-white border-primary-500 shadow-sm">
+                                <div className="w-6 h-6 rounded-full flex items-center justify-center text-[11px] font-black border bg-primary-500 text-white border-primary-500 shadow-xs">
                                   ✓
                                 </div>
-                                <span className="text-[8px] font-bold mt-1 text-primary-500 scale-90 sm:scale-100">
+                                <span className="text-[11px] font-bold mt-1.5 text-primary-500">
                                   {lang === 'vi' ? step.labelVi : step.labelEn}
                                 </span>
                               </div>
@@ -1674,51 +1798,51 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-border-subtle flex justify-between items-center text-3xs font-bold text-ink-muted">
+                <div className="mt-4 pt-3 border-t border-border-subtle flex justify-between items-center text-xs font-bold text-ink-muted">
                   <span>Ban biên tập Quy chuẩn & Tiêu chuẩn IBST</span>
-                  <a href="#state-gov" onClick={(e) => { e.preventDefault(); handleTabChange('state-gov', 'quy-chuan-tieu-chuan'); }} className="hover:text-primary-500 hover:underline flex items-center gap-1 transition-colors">
-                    {lang === 'vi' ? 'Xem tất cả' : 'View all'} <ChevronRight size={10} className="transition-transform group-hover:translate-x-0.5" />
+                  <a href="#state-gov" onClick={(e) => { e.preventDefault(); handleTabChange('state-gov', 'quy-chuan-tieu-chuan'); }} className="text-primary-500 hover:underline flex items-center gap-1 transition-colors">
+                    {lang === 'vi' ? 'Xem tất cả' : 'View all'} <ChevronRight size={13} className="transition-transform group-hover:translate-x-0.5" />
                   </a>
                 </div>
               </div>
 
               {/* Cột Phải: Biểu Đồ Thống Kê CSS Động + Bảng chỉ số phụ */}
-              <div className="lg:col-span-7 flex flex-col justify-between p-6 bg-surface hover:shadow-card-hover border border-border rounded-2xl transition-all duration-300 text-left relative overflow-hidden group">
+              <div className="lg:col-span-7 flex flex-col justify-between p-6 bg-surface shadow-card hover:shadow-card-hover border border-border rounded-2xl transition-all duration-300 text-left relative overflow-hidden group">
                 <div className="space-y-4">
-                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-2 border-b border-border-subtle">
+                  <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 pb-2.5 border-b border-border-subtle">
                     <div className="space-y-1">
-                      <h3 className="text-xs sm:text-sm font-black text-ink tracking-wide flex items-center gap-2">
-                        <div className="w-6 h-6 rounded-lg bg-primary-500/10 flex items-center justify-center text-primary-500 shrink-0">
-                          <Activity size={13} />
+                      <h3 className="text-sm sm:text-base font-black text-ink tracking-wide flex items-center gap-2.5">
+                        <div className="w-7 h-7 rounded-lg bg-primary-500/15 flex items-center justify-center text-primary-500 shrink-0">
+                          <Activity size={15} />
                         </div>
                         {lang === 'vi' ? 'Hoạt động Khoa học & Ban hành Tiêu chuẩn' : 'R&D Outputs & Standard Publications'}
                       </h3>
-                      <p className="text-[10px] text-ink-muted font-bold uppercase tracking-wider pl-8">
+                      <p className="text-xs text-ink-muted font-semibold pl-9">
                         {lang === 'vi' ? 'Số liệu tổng hợp kết quả nghiên cứu khoa học qua các năm' : 'Summary of scientific research outputs over the years'}
                       </p>
                     </div>
 
                     {/* Chú giải (Legend) */}
-                    <div className="flex items-center gap-4 text-3xs font-bold text-ink-muted pl-8 sm:pl-0">
-                      <div className="flex items-center gap-1.5 font-bold">
-                        <span className="w-2.5 h-2.5 rounded-sm bg-gradient-to-r from-primary-500 to-indigo-600"></span>
+                    <div className="flex items-center gap-4 text-xs font-bold text-ink-secondary pl-9 sm:pl-0">
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded-xs bg-gradient-to-r from-primary-500 to-indigo-600"></span>
                         <span>Đề tài R&D</span>
                       </div>
-                      <div className="flex items-center gap-1.5 font-bold">
-                        <span className="w-2.5 h-2.5 rounded-sm bg-gradient-to-r from-emerald-500 to-teal-500"></span>
+                      <div className="flex items-center gap-1.5">
+                        <span className="w-3 h-3 rounded-xs bg-gradient-to-r from-emerald-500 to-teal-500"></span>
                         <span>Tiêu chuẩn</span>
                       </div>
                     </div>
                   </div>
 
-                  {/* Vùng vẽ biểu đồ (Chart Body) - Tăng chiều cao để chiếm không gian cân đối */}
-                  <div className="h-48 flex items-end gap-5 md:gap-7 border-b border-border-subtle pb-2 relative z-10 pt-4">
+                  {/* Vùng vẽ biểu đồ (Chart Body) */}
+                  <div className="h-48 flex items-end gap-5 md:gap-7 border-b border-border-subtle pb-2 relative z-10 pt-5">
                     {/* Đường lưới phụ (Grid lines) */}
-                    <div className="absolute inset-0 flex flex-col justify-between pointer-events-none text-3xs font-bold text-ink-muted/20 z-0">
-                      <div className="border-b border-border-subtle w-full pb-1 flex justify-between"><span>40</span><span></span></div>
-                      <div className="border-b border-border-subtle w-full pb-1 flex justify-between"><span>30</span><span></span></div>
-                      <div className="border-b border-border-subtle w-full pb-1 flex justify-between"><span>20</span><span></span></div>
-                      <div className="border-b border-border-subtle w-full pb-1 flex justify-between"><span>10</span><span></span></div>
+                    <div className="absolute inset-0 flex flex-col justify-between pointer-events-none text-[11px] font-bold text-ink-muted/35 z-0">
+                      <div className="border-b border-border-subtle/70 w-full pb-1 flex justify-between"><span>40</span><span></span></div>
+                      <div className="border-b border-border-subtle/70 w-full pb-1 flex justify-between"><span>30</span><span></span></div>
+                      <div className="border-b border-border-subtle/70 w-full pb-1 flex justify-between"><span>20</span><span></span></div>
+                      <div className="border-b border-border-subtle/70 w-full pb-1 flex justify-between"><span>10</span><span></span></div>
                     </div>
 
                     {/* Các cột dữ liệu */}
@@ -1731,53 +1855,59 @@ export default function App() {
                       { year: '2025', research: 42, standards: 15 }
                     ].map((data, idx) => (
                       <div key={idx} className="flex-1 flex flex-col items-center gap-2 h-full justify-end relative z-10">
-                        <div className="w-full flex items-end justify-center gap-1 md:gap-2 h-full">
+                        <div className="w-full flex items-end justify-center gap-1.5 md:gap-2 h-full">
                           {/* Đề tài R&D (Cột màu Xanh) */}
                           <div 
-                            className="w-3 sm:w-4 rounded-t bg-gradient-to-t from-primary-500 to-indigo-600 hover:from-primary-600 hover:to-indigo-700 transition-all duration-300 relative group/bar cursor-pointer shadow-sm shadow-primary-500/10 hover:shadow-primary-500/30"
+                            className="w-4 sm:w-5 rounded-t-md bg-gradient-to-t from-primary-600 to-indigo-500 hover:from-primary-500 hover:to-indigo-400 transition-all duration-300 relative group/bar cursor-pointer shadow-xs"
                             style={{ height: `${(data.research / 45) * 100}%` }}
                           >
+                            <span className="absolute -top-4 left-1/2 -translate-x-1/2 text-[10px] font-extrabold text-primary-500">
+                              {data.research}
+                            </span>
                             {/* Tooltip */}
-                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2.5 py-1 bg-slate-900 dark:bg-slate-800 text-white rounded-lg text-[8px] font-extrabold whitespace-nowrap opacity-0 pointer-events-none group-hover/bar:opacity-100 transition-opacity duration-200 shadow-md z-30">
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-5 px-2.5 py-1 bg-slate-900 text-white rounded-lg text-[11px] font-bold whitespace-nowrap opacity-0 pointer-events-none group-hover/bar:opacity-100 transition-opacity duration-200 shadow-md z-30">
                               {data.research} {lang === 'vi' ? 'Đề tài R&D' : 'R&D Topics'}
                             </div>
                           </div>
 
                           {/* Quy chuẩn (Cột màu Xanh lá) */}
                           <div 
-                            className="w-3 sm:w-4 rounded-t bg-gradient-to-t from-emerald-500 to-teal-500 hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 relative group/bar cursor-pointer shadow-sm shadow-emerald-500/10 hover:shadow-emerald-500/30"
+                            className="w-4 sm:w-5 rounded-t-md bg-gradient-to-t from-emerald-600 to-teal-400 hover:from-emerald-500 hover:to-teal-300 transition-all duration-300 relative group/bar cursor-pointer shadow-xs"
                             style={{ height: `${(data.standards / 45) * 100}%` }}
                           >
+                            <span className="absolute -top-4 left-1/2 -translate-x-1/2 text-[10px] font-extrabold text-emerald-500">
+                              {data.standards}
+                            </span>
                             {/* Tooltip */}
-                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-1.5 px-2.5 py-1 bg-slate-900 dark:bg-slate-800 text-white rounded-lg text-[8px] font-extrabold whitespace-nowrap opacity-0 pointer-events-none group-hover/bar:opacity-100 transition-opacity duration-200 shadow-md z-30">
+                            <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-5 px-2.5 py-1 bg-slate-900 text-white rounded-lg text-[11px] font-bold whitespace-nowrap opacity-0 pointer-events-none group-hover/bar:opacity-100 transition-opacity duration-200 shadow-md z-30">
                               {data.standards} {lang === 'vi' ? 'Tiêu chuẩn' : 'Standards'}
                             </div>
                           </div>
                         </div>
                         {/* Nhãn năm */}
-                        <span className="text-[10px] font-extrabold text-ink-muted tracking-wider">{data.year}</span>
+                        <span className="text-xs font-extrabold text-ink-secondary tracking-wide">{data.year}</span>
                       </div>
                     ))}
                   </div>
 
-                  {/* Bảng chỉ số phụ bên dưới biểu đồ để tận dụng không gian trống hoàn hảo */}
-                  <div className="grid grid-cols-3 gap-3 pt-3 mt-1">
+                  {/* Bảng chỉ số phụ bên dưới biểu đồ */}
+                  <div className="grid grid-cols-3 gap-3 pt-2">
                     {[
                       { label: lang === 'vi' ? 'Đề tài cấp Nhà nước' : 'State Projects', value: '12' },
                       { label: lang === 'vi' ? 'Đề tài cấp Bộ' : 'Ministry Projects', value: '86' },
                       { label: lang === 'vi' ? 'Giải thưởng KHCN' : 'Science Awards', value: '05' }
                     ].map((metric, idx) => (
-                      <div key={idx} className="p-2.5 bg-muted/20 border border-border-subtle rounded-xl text-center shadow-inner">
-                        <span className="text-[14px] font-black text-primary-500 block leading-tight">{metric.value}</span>
-                        <span className="text-[8px] text-ink-muted uppercase font-black tracking-wider block mt-0.5">{metric.label}</span>
+                      <div key={idx} className="p-3 bg-muted/40 border border-border rounded-xl text-center shadow-2xs">
+                        <span className="text-xl font-black text-primary-500 block leading-tight">{metric.value}</span>
+                        <span className="text-[11px] text-ink-muted uppercase font-extrabold tracking-wide block mt-1">{metric.label}</span>
                       </div>
                     ))}
                   </div>
 
-                  {/* Thành tựu khoa học nổi bật để lấp đầy khoảng trắng */}
-                  <div className="p-3 bg-muted/30 border border-border rounded-xl space-y-1.5 text-3xs font-semibold text-ink-secondary leading-relaxed mt-2.5">
-                    <span className="text-[8px] text-ink-muted uppercase font-black tracking-wider block">{lang === 'vi' ? 'Thành tựu & Đề tài nổi bật mới nhất:' : 'Latest Achievements & Key Research:'}</span>
-                    <ul className="list-disc pl-3.5 space-y-1">
+                  {/* Thành tựu khoa học nổi bật */}
+                  <div className="p-3.5 bg-muted/35 border border-border rounded-xl space-y-1.5 text-xs font-medium text-ink-secondary leading-relaxed">
+                    <span className="text-[11px] text-ink font-black uppercase tracking-wider block">{lang === 'vi' ? 'Thành tựu & Đề tài nổi bật mới nhất:' : 'Latest Achievements & Key Research:'}</span>
+                    <ul className="list-disc pl-4 space-y-1">
                       <li>
                         {lang === 'vi' 
                           ? 'Nghiên cứu ứng dụng thành công bê tông siêu tính năng (UHPC) chế tạo cấu kiện đúc sẵn lắp ghép cho vùng biển đảo.'
@@ -1792,10 +1922,10 @@ export default function App() {
                   </div>
                 </div>
 
-                <div className="mt-4 pt-3 border-t border-border-subtle flex justify-between items-center text-3xs font-bold text-ink-muted">
+                <div className="mt-4 pt-3 border-t border-border-subtle flex justify-between items-center text-xs font-bold text-ink-muted">
                   <span>Nguồn: Phòng Quản lý Khoa học & Đào tạo IBST</span>
-                  <span className="text-[10px] text-success-500 font-extrabold flex items-center gap-1">
-                    <span className="w-1.5 h-1.5 rounded-full bg-success-500 animate-ping"></span>
+                  <span className="text-xs text-success-500 font-extrabold flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-full bg-success-500 animate-ping"></span>
                     {lang === 'vi' ? 'Đã cập nhật Q1/2026' : 'Updated Q1/2026'}
                   </span>
                 </div>
@@ -1806,34 +1936,34 @@ export default function App() {
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-stretch border-t border-border-subtle pt-6 mt-6">
               
               {/* Cột 1: Bản đồ tương tác SVG & Google Map (col-span-7) */}
-              <div className="lg:col-span-7 card p-5 flex flex-col justify-between space-y-4">
+              <div className="lg:col-span-7 card p-6 flex flex-col justify-between space-y-4">
                 <div>
-                  <div className="flex justify-between items-center border-b border-border pb-3">
-                    <h3 className="text-sm font-black text-ink flex items-center gap-2">
-                      <MapPin className="text-primary-500" size={16} />
+                  <div className="flex flex-wrap justify-between items-center gap-2 border-b border-border pb-3">
+                    <h3 className="text-sm sm:text-base font-black text-ink flex items-center gap-2">
+                      <MapPin className="text-primary-500" size={18} />
                       {lang === 'vi' ? 'Bản đồ Dự án & Trụ sở IBST' : 'Key Projects & Offices Map'}
                     </h3>
                     
                     {/* Toggle Map Mode */}
-                    <div className="flex bg-muted p-0.5 rounded-lg border border-border-subtle gap-1">
+                    <div className="flex bg-muted p-1 rounded-xl border border-border gap-1">
                       <button
                         onClick={() => setMapMode('project')}
                         className={cn(
-                          "px-3 py-1.5 text-3xs font-extrabold rounded-md cursor-pointer transition-all flex items-center gap-1",
-                          mapMode === 'project' ? "bg-surface text-primary-500 shadow-sm" : "text-ink-muted hover:text-ink"
+                          "px-3 py-1.5 text-xs font-extrabold rounded-lg cursor-pointer transition-all flex items-center gap-1.5",
+                          mapMode === 'project' ? "bg-surface text-primary-500 shadow-xs" : "text-ink-muted hover:text-ink"
                         )}
                       >
-                        <Globe size={10} />
+                        <Globe size={12} />
                         {lang === 'vi' ? 'DỰ ÁN TIÊU BIỂU' : 'KEY PROJECTS'}
                       </button>
                       <button
                         onClick={() => setMapMode('google')}
                         className={cn(
-                          "px-3 py-1.5 text-3xs font-extrabold rounded-md cursor-pointer transition-all flex items-center gap-1 relative overflow-visible",
-                          mapMode === 'google' ? "bg-surface text-primary-500 shadow-sm" : "text-ink-muted hover:text-ink"
+                          "px-3 py-1.5 text-xs font-extrabold rounded-lg cursor-pointer transition-all flex items-center gap-1.5 relative overflow-visible",
+                          mapMode === 'google' ? "bg-surface text-primary-500 shadow-xs" : "text-ink-muted hover:text-ink"
                         )}
                       >
-                        <MapPin size={10} />
+                        <MapPin size={12} />
                         {lang === 'vi' ? 'BẢN ĐỒ VỊ TRÍ' : 'GOOGLE MAP'}
                         <span className="absolute -top-1 -right-1 flex h-2 w-2">
                           <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-primary-400 opacity-75"></span>
@@ -1844,24 +1974,24 @@ export default function App() {
                   </div>
                   
                   {mapMode === 'project' ? (
-                    <p className="text-3xs text-ink-muted leading-relaxed font-semibold mt-2 animate-fade-in">
+                    <p className="text-xs text-ink-muted leading-relaxed font-medium mt-2.5 animate-fade-in">
                       {lang === 'vi' 
-                        ? 'Nhấp chọn các điểm ghim (markers) trên bản đồ để xem chi tiết vai trò khoa học kỹ thuật và năng lực thực chiến của IBST tại các công trình trọng điểm đất nước.'
-                        : 'Click pulsing markers on the map to explore IBST\'s technical engineering roles in national key projects.'}
+                        ? 'Nhấp chọn dự án trong danh sách để định vị trên bản đồ và xem vai trò kỹ thuật của IBST tại các công trình trọng điểm đất nước.'
+                        : 'Select a project to locate on the map and explore IBST\'s technical engineering roles in national key projects.'}
                     </p>
                   ) : (
-                    <p className="text-3xs text-ink-muted leading-relaxed font-semibold mt-2 animate-fade-in">
+                    <p className="text-xs text-ink-muted leading-relaxed font-medium mt-2.5 animate-fade-in">
                       {lang === 'vi' 
-                        ? 'Nhấp chọn các chi nhánh hoặc văn phòng phân viện để hiển thị vị trí định vị vệ tinh GPS thời gian thực trên bản đồ Google Maps.'
+                        ? 'Nhấp chọn trụ sở chính hoặc văn phòng phân viện để hiển thị vị trí định vị vệ tinh GPS thời gian thực trên Google Maps.'
                         : 'Select any regional branch office to display its real-time GPS coordinates and route on Google Maps.'}
                     </p>
                   )}
                 </div>
 
                 {mapMode === 'project' ? (
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-stretch h-[280px] animate-fade-in">
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-stretch h-[320px] animate-fade-in">
                     {/* Left: General Google Map of Vietnam / Project Map */}
-                    <div className="md:col-span-7 bg-muted border border-border rounded-xl overflow-hidden relative shadow-inner h-full min-h-[180px] md:min-h-0">
+                    <div className="md:col-span-7 bg-muted border border-border rounded-xl overflow-hidden relative shadow-inner h-full min-h-[200px] md:min-h-0">
                       <iframe 
                         src={selectedMapProject 
                           ? `https://maps.google.com/maps?q=${encodeURIComponent(selectedMapProject.nameVi.split('(')[0])}&t=&z=13&ie=UTF8&iwloc=&output=embed`
@@ -1874,8 +2004,8 @@ export default function App() {
                     </div>
 
                     {/* Right: Vertical List of Projects with Inline Accordion Detail */}
-                    <div className="md:col-span-5 flex flex-col h-[280px] overflow-y-auto pr-1 space-y-2 text-left">
-                      <span className="text-[8px] text-ink-muted uppercase font-black tracking-wider block mb-1">
+                    <div className="md:col-span-5 flex flex-col h-[320px] overflow-y-auto pr-1 space-y-2 text-left">
+                      <span className="text-[11px] text-ink-muted uppercase font-black tracking-wider block mb-0.5">
                         {lang === 'vi' ? 'Danh sách dự án trọng điểm:' : 'Key Projects List:'}
                       </span>
                       {MAP_PROJECTS.map((proj) => {
@@ -1884,37 +2014,37 @@ export default function App() {
                           <div 
                             key={proj.id}
                             className={cn(
-                              "border rounded-xl p-2.5 transition-all duration-200 cursor-pointer text-left flex flex-col",
+                              "border rounded-xl p-3 transition-all duration-200 cursor-pointer text-left flex flex-col",
                               active 
-                                ? "bg-primary/5 border-primary-500/35 shadow-sm" 
-                                : "bg-muted/30 border-border hover:bg-muted"
+                                ? "bg-primary/8 border-primary-500/40 shadow-xs" 
+                                : "bg-muted/35 border-border hover:bg-muted"
                             )}
                             onClick={() => setSelectedMapProject(active ? null : proj)}
                           >
                             <div className="flex items-start justify-between gap-2">
                               <span className={cn(
-                                "text-[10px] font-extrabold leading-tight",
+                                "text-xs font-bold leading-snug",
                                 active ? "text-primary-500 font-black" : "text-ink"
                               )}>
                                 {lang === 'vi' ? proj.nameVi : proj.nameEn}
                               </span>
                               <span className={cn(
-                                "w-1.5 h-1.5 rounded-full mt-1.5 flex-shrink-0",
+                                "w-2 h-2 rounded-full mt-1.5 flex-shrink-0",
                                 active ? "bg-primary-500 animate-ping" : "bg-ink-muted/45"
                               )} />
                             </div>
                             
                             {active && (
-                              <div className="mt-2 pt-2 border-t border-border-subtle text-[8.5px] space-y-1.5 animate-fade-in">
+                              <div className="mt-2.5 pt-2.5 border-t border-border-subtle text-xs space-y-2 animate-fade-in">
                                 <div className="space-y-0.5">
-                                  <span className="font-black text-ink-muted uppercase text-[7px] block">{lang === 'vi' ? 'Vai trò của IBST' : 'IBST\'s Role'}</span>
-                                  <p className="text-ink-secondary leading-normal font-semibold">
+                                  <span className="font-black text-ink-muted uppercase text-[10px] block">{lang === 'vi' ? 'Vai trò của IBST' : 'IBST\'s Role'}</span>
+                                  <p className="text-ink-secondary leading-relaxed font-medium">
                                     {lang === 'vi' ? proj.roleVi : proj.roleEn}
                                   </p>
                                 </div>
                                 <div className="space-y-0.5">
-                                  <span className="font-black text-ink-muted uppercase text-[7px] block">{lang === 'vi' ? 'Thông số kỹ thuật' : 'Technical Specs'}</span>
-                                  <p className="text-ink-secondary leading-normal font-medium">
+                                  <span className="font-black text-ink-muted uppercase text-[10px] block">{lang === 'vi' ? 'Thông số kỹ thuật' : 'Technical Specs'}</span>
+                                  <p className="text-ink-secondary leading-relaxed font-medium">
                                     {lang === 'vi' ? proj.specsVi : proj.specsEn}
                                   </p>
                                 </div>
@@ -1926,9 +2056,9 @@ export default function App() {
                     </div>
                   </div>
                 ) : (
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-stretch h-[280px] animate-fade-in text-left">
+                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 items-stretch h-[320px] animate-fade-in text-left">
                     {/* Left: Google Map for Regional Offices */}
-                    <div className="md:col-span-7 bg-muted border border-border rounded-xl overflow-hidden relative shadow-inner h-full min-h-[180px] md:min-h-0">
+                    <div className="md:col-span-7 bg-muted border border-border rounded-xl overflow-hidden relative shadow-inner h-full min-h-[200px] md:min-h-0">
                       {selectedOffice === 'hanoi' && (
                         <iframe 
                           src="https://maps.google.com/maps?q=Vi%E1%BB%87n%20Khoa%20h%E1%BB%8Dc%20C%C3%B4ng%20ngh%E1%BB%87%20X%C3%A2y%20d%E1%BB%B1ng%2081%20Tr%E1%BA%A7n%20Cung&t=&z=15&ie=UTF8&iwloc=&output=embed"
@@ -1957,48 +2087,48 @@ export default function App() {
 
                     {/* Right: Regional Office Selection List */}
                     <div className="md:col-span-5 flex flex-col justify-between py-0.5 space-y-2 h-full">
-                      <div className="space-y-1.5">
+                      <div className="space-y-2">
                         <button
                           onClick={() => setSelectedOffice('hanoi')}
                           className={cn(
-                            "w-full text-left p-2 rounded-xl border transition-all cursor-pointer flex flex-col space-y-0.5",
+                            "w-full text-left p-3 rounded-xl border transition-all cursor-pointer flex flex-col space-y-1",
                             selectedOffice === 'hanoi' 
-                              ? "bg-primary/5 border-primary-500/25 text-primary-500 shadow-sm" 
-                              : "bg-muted/30 border-border hover:bg-muted text-ink-secondary"
+                              ? "bg-primary/8 border-primary-500/35 text-primary-500 shadow-xs" 
+                              : "bg-muted/35 border-border hover:bg-muted text-ink-secondary"
                           )}
                         >
-                          <span className="text-[10px] font-black">{lang === 'vi' ? 'Trụ sở chính Hà Nội' : 'Hanoi Headquarters'}</span>
-                          <span className="text-[8px] text-ink-muted leading-tight font-medium">81 Trần Cung, Cầu Giấy, HN</span>
+                          <span className="text-xs font-black">{lang === 'vi' ? 'Trụ sở chính Hà Nội' : 'Hanoi Headquarters'}</span>
+                          <span className="text-[11px] text-ink-muted leading-tight font-medium">81 Trần Cung, Nghĩa Đô, Cầu Giấy, HN</span>
                         </button>
                         <button
                           onClick={() => setSelectedOffice('danang')}
                           className={cn(
-                            "w-full text-left p-2 rounded-xl border transition-all cursor-pointer flex flex-col space-y-0.5",
+                            "w-full text-left p-3 rounded-xl border transition-all cursor-pointer flex flex-col space-y-1",
                             selectedOffice === 'danang' 
-                              ? "bg-primary/5 border-primary-500/25 text-primary-500 shadow-sm" 
-                              : "bg-muted/30 border-border hover:bg-muted text-ink-secondary"
+                              ? "bg-primary/8 border-primary-500/35 text-primary-500 shadow-xs" 
+                              : "bg-muted/35 border-border hover:bg-muted text-ink-secondary"
                           )}
                         >
-                          <span className="text-[10px] font-black">{lang === 'vi' ? 'Phân viện Miền Trung' : 'Central Vietnam Branch'}</span>
-                          <span className="text-[8px] text-ink-muted leading-tight font-medium">183 Phạm Văn Đồng, Vỹ Dạ, Huế</span>
+                          <span className="text-xs font-black">{lang === 'vi' ? 'Phân viện Miền Trung' : 'Central Vietnam Branch'}</span>
+                          <span className="text-[11px] text-ink-muted leading-tight font-medium">183 Phạm Văn Đồng, Vỹ Dạ, TP. Huế</span>
                         </button>
                         <button
                           onClick={() => setSelectedOffice('hcm')}
                           className={cn(
-                            "w-full text-left p-2 rounded-xl border transition-all cursor-pointer flex flex-col space-y-0.5",
+                            "w-full text-left p-3 rounded-xl border transition-all cursor-pointer flex flex-col space-y-1",
                             selectedOffice === 'hcm' 
-                              ? "bg-primary/5 border-primary-500/25 text-primary-500 shadow-sm" 
-                              : "bg-muted/30 border-border hover:bg-muted text-ink-secondary"
+                              ? "bg-primary/8 border-primary-500/35 text-primary-500 shadow-xs" 
+                              : "bg-muted/35 border-border hover:bg-muted text-ink-secondary"
                           )}
                         >
-                          <span className="text-[10px] font-black">{lang === 'vi' ? 'Phân viện Miền Nam' : 'Southern Vietnam Branch'}</span>
-                          <span className="text-[8px] text-ink-muted leading-tight font-medium">20/5B QL 13, Thủ Đức, TP.HCM</span>
+                          <span className="text-xs font-black">{lang === 'vi' ? 'Phân viện Miền Nam' : 'Southern Vietnam Branch'}</span>
+                          <span className="text-[11px] text-ink-muted leading-tight font-medium">20/5B QL 13, TP. Thủ Đức, TP.HCM</span>
                         </button>
                       </div>
 
-                      <div className="p-2 bg-muted/40 border border-border rounded-xl text-[8px] font-semibold text-ink-muted leading-normal">
+                      <div className="p-3 bg-muted/40 border border-border rounded-xl text-[11px] font-medium text-ink-muted leading-relaxed">
                         {lang === 'vi' 
-                          ? 'Bản đồ trực tiếp tích hợp tính năng định hướng, đo khoảng cách đường bộ và hiển thị mật độ giao thông.'
+                          ? 'Bản đồ trực tiếp tích hợp tính năng chỉ đường, đo khoảng cách và hiển thị mật độ giao thông.'
                           : 'Live integrated maps featuring directions, distance measurements, and traffic densities.'}
                       </div>
                     </div>
@@ -2007,51 +2137,51 @@ export default function App() {
               </div>
 
               {/* Cột 2: Kệ Tạp chí Khoa học & Ấn phẩm điện tử (col-span-5) */}
-              <div className="lg:col-span-5 card p-5 flex flex-col justify-between space-y-4">
+              <div className="lg:col-span-5 card p-6 flex flex-col justify-between space-y-4">
                 <div>
-                  <h3 className="text-sm font-black text-ink border-b border-border pb-3 flex items-center gap-2">
-                    <BookOpen className="text-primary-500" size={16} />
+                  <h3 className="text-sm sm:text-base font-black text-ink border-b border-border pb-3 flex items-center gap-2">
+                    <BookOpen className="text-primary-500" size={18} />
                     {lang === 'vi' ? 'Tạp chí KHCN Xây dựng' : 'Journal of Building Science & Tech'}
                   </h3>
-                  <p className="text-3xs text-ink-muted leading-relaxed font-semibold">
+                  <p className="text-xs text-ink-muted leading-relaxed font-medium mt-2.5">
                     {lang === 'vi'
                       ? 'Ấn phẩm định kỳ chính thống công bố các kết quả nghiên cứu khoa học, vật liệu mới và quy chuẩn kỹ thuật xây dựng hàng đầu Việt Nam.'
                       : 'Official periodic publication publishing leading scientific research papers, new building materials, and codes.'}
                   </p>
                 </div>
 
-                {/* Nội dung Carousel Tạp chí - Ảnh to hơn w-32 h-44 & Danh sách mục lục bài báo */}
-                <div className="p-4 bg-muted border border-border rounded-xl flex items-center gap-5 relative overflow-hidden min-h-[200px] flex-1">
-                  <div className="w-32 h-44 flex-shrink-0 bg-primary-600 rounded-xl shadow-md overflow-hidden relative group self-center">
+                {/* Nội dung Carousel Tạp chí */}
+                <div className="p-4 bg-muted/50 border border-border rounded-xl flex flex-col sm:flex-row items-center gap-4 relative overflow-hidden min-h-[220px] flex-1">
+                  <div className="w-32 h-44 flex-shrink-0 bg-primary-600 rounded-xl shadow-md overflow-hidden relative group self-center border border-border">
                     <img 
                       src={JOURNAL_ISSUES[activeJournalIndex].image} 
                       alt="Journal Cover" 
-                      className="w-full h-full object-cover opacity-90 group-hover:scale-105 transition-transform" 
+                      className="w-full h-full object-cover opacity-95 group-hover:scale-105 transition-transform" 
                     />
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary-950/20 via-transparent to-primary-950/80 flex flex-col justify-end p-2">
-                      <span className="text-[7px] text-white/90 font-black block text-center leading-none">{JOURNAL_ISSUES[activeJournalIndex].issn}</span>
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary-950/20 via-transparent to-primary-950/85 flex flex-col justify-end p-2.5">
+                      <span className="text-[10px] text-white/95 font-black block text-center leading-none">{JOURNAL_ISSUES[activeJournalIndex].issn}</span>
                     </div>
                   </div>
 
                   <div className="flex-1 space-y-2.5 text-left min-w-0 flex flex-col justify-between py-1">
                     <div>
-                      <div className="flex justify-between items-center border-b border-border-subtle pb-1">
-                        <span className="px-1.5 py-0.5 rounded text-[8px] font-black uppercase bg-primary-500/10 text-primary-500 border border-primary-500/10">
+                      <div className="flex justify-between items-center border-b border-border-subtle pb-1.5">
+                        <span className="px-2 py-0.5 rounded-md text-[11px] font-black uppercase bg-primary-500/15 text-primary-500 border border-primary-500/20">
                           {JOURNAL_ISSUES[activeJournalIndex].volume}
                         </span>
-                        <span className="text-[8px] text-ink-muted font-bold">{JOURNAL_ISSUES[activeJournalIndex].date}</span>
+                        <span className="text-[11px] text-ink-muted font-bold">{JOURNAL_ISSUES[activeJournalIndex].date}</span>
                       </div>
                       
                       {/* Danh sách bài viết */}
-                      <div className="mt-2 space-y-2">
-                        <span className="text-[8px] text-ink-muted uppercase font-black tracking-wider block">{lang === 'vi' ? 'Các nghiên cứu nổi bật:' : 'Featured Papers:'}</span>
-                        <div className="space-y-2 max-h-[140px] overflow-y-auto pr-1">
+                      <div className="mt-2.5 space-y-2">
+                        <span className="text-[10px] text-ink-muted uppercase font-black tracking-wider block">{lang === 'vi' ? 'Các nghiên cứu nổi bật:' : 'Featured Papers:'}</span>
+                        <div className="space-y-2.5 max-h-[160px] overflow-y-auto pr-1">
                           {JOURNAL_ISSUES[activeJournalIndex].articles.map((art, idx) => (
-                            <div key={idx} className="text-3xs space-y-0.5 font-semibold">
-                              <p className="text-ink font-bold leading-tight line-clamp-2 hover:text-primary-500 transition-colors">
+                            <div key={idx} className="space-y-0.5">
+                              <p className="text-xs text-ink font-bold leading-snug line-clamp-2 hover:text-primary-500 transition-colors cursor-pointer" onClick={() => { setSelectedJournal(JOURNAL_ISSUES[activeJournalIndex]); setJournalModalOpen(true); }}>
                                 {idx + 1}. {art.title}
                               </p>
-                              <p className="text-[8px] text-ink-muted italic leading-none pl-3">
+                              <p className="text-[11px] text-ink-muted italic leading-tight pl-3.5">
                                 {art.authors}
                               </p>
                             </div>
@@ -2063,15 +2193,15 @@ export default function App() {
                 </div>
 
                 {/* Các nút bấm điều hướng Carousel */}
-                <div className="flex justify-between items-center">
-                  <div className="flex gap-1">
+                <div className="flex justify-between items-center pt-1">
+                  <div className="flex gap-1.5">
                     {JOURNAL_ISSUES.map((_, idx) => (
                       <button
                         key={idx}
                         onClick={() => setActiveJournalIndex(idx)}
                         className={cn(
-                          "w-2 h-2 rounded-full transition-all cursor-pointer",
-                          activeJournalIndex === idx ? "bg-primary-500 w-4" : "bg-border hover:bg-ink-muted"
+                          "h-2 rounded-full transition-all cursor-pointer",
+                          activeJournalIndex === idx ? "bg-primary-500 w-5" : "bg-border w-2 hover:bg-ink-muted"
                         )}
                       />
                     ))}
@@ -2082,9 +2212,9 @@ export default function App() {
                       setSelectedJournal(JOURNAL_ISSUES[activeJournalIndex]);
                       setJournalModalOpen(true);
                     }}
-                    className="flex items-center gap-1 px-3 py-1.5 rounded-lg text-[9px] font-extrabold bg-primary-500 text-white hover:bg-primary-600 shadow-sm cursor-pointer transition-colors"
+                    className="flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-extrabold bg-primary-500 text-white hover:bg-primary-600 shadow-xs cursor-pointer transition-colors"
                   >
-                    <Eye size={10} />
+                    <Eye size={13} />
                     {lang === 'vi' ? 'Xem mục lục chi tiết' : 'View Table of Contents'}
                   </button>
                 </div>
@@ -2092,13 +2222,13 @@ export default function App() {
             </div>
             
             {/* ─── ĐỐI TÁC - KHÁCH HÀNG (FULL-WIDTH H-MARQUEE) ─── */}
-            <div className="card p-5 mt-6 space-y-4 text-left border border-border-subtle hover:shadow-card-hover transition-all duration-300">
-              <h3 className="text-2xs sm:text-xs font-black text-ink uppercase tracking-wider flex items-center gap-1.5 pb-1 border-b border-border-subtle">
-                <Users className="text-primary-500" size={12} />
-                {lang === 'vi' ? 'Đối tác - Khách hàng' : 'Partners & Clients'}
+            <div className="card p-5 mt-6 space-y-4 text-left border border-border hover:shadow-card-hover transition-all duration-300">
+              <h3 className="text-sm font-black text-ink uppercase tracking-wider flex items-center gap-2 pb-2 border-b border-border-subtle">
+                <Users className="text-primary-500" size={15} />
+                {lang === 'vi' ? 'Đối tác - Khách hàng Chiến lược' : 'Strategic Partners & Clients'}
               </h3>
               
-              <div className="animate-partner-marquee-hover-pause overflow-hidden relative w-full bg-muted/20 border border-border-subtle rounded-2xl py-4 flex items-center">
+              <div className="animate-partner-marquee-hover-pause overflow-hidden relative w-full bg-muted/30 border border-border-subtle rounded-2xl py-4 flex items-center marquee-fade-mask">
                 <div className="flex gap-4 animate-partner-marquee pr-4">
                   {[
                     { name: 'Sông Đà 4', color: 'text-primary-600', icon: (
@@ -2123,9 +2253,9 @@ export default function App() {
                       <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M12,2 L15,9 L22,9 L17,14 L19,21 L12,17 L5,21 L7,14 L2,9 L9,9 Z" /></svg>
                     )}
                   ].map((p, idx) => (
-                    <div key={`p1-${idx}`} className="flex items-center gap-3 px-4 py-2 bg-surface border border-border rounded-xl shadow-sm whitespace-nowrap min-w-[150px] justify-center transition-all duration-300 hover:border-primary-500/35 hover:shadow-md">
+                    <div key={`p1-${idx}`} className="flex items-center gap-3 px-5 py-2.5 bg-surface border border-border rounded-xl shadow-xs whitespace-nowrap min-w-[165px] justify-center transition-all duration-300 hover:border-primary-500/45 hover:shadow-md">
                       <span className={p.color}>{p.icon}</span>
-                      <span className="text-[10px] font-black text-ink">{p.name}</span>
+                      <span className="text-xs font-black text-ink">{p.name}</span>
                     </div>
                   ))}
                 </div>
@@ -2153,9 +2283,9 @@ export default function App() {
                       <svg className="w-8 h-8" viewBox="0 0 24 24" fill="currentColor"><path d="M12,2 L15,9 L22,9 L17,14 L19,21 L12,17 L5,21 L7,14 L2,9 L9,9 Z" /></svg>
                     )}
                   ].map((p, idx) => (
-                    <div key={`p2-${idx}`} className="flex items-center gap-3 px-4 py-2 bg-surface border border-border rounded-xl shadow-sm whitespace-nowrap min-w-[150px] justify-center transition-all duration-300 hover:border-primary-500/35 hover:shadow-md">
+                    <div key={`p2-${idx}`} className="flex items-center gap-3 px-5 py-2.5 bg-surface border border-border rounded-xl shadow-xs whitespace-nowrap min-w-[165px] justify-center transition-all duration-300 hover:border-primary-500/45 hover:shadow-md">
                       <span className={p.color}>{p.icon}</span>
-                      <span className="text-[10px] font-black text-ink">{p.name}</span>
+                      <span className="text-xs font-black text-ink">{p.name}</span>
                     </div>
                   ))}
                 </div>
@@ -3338,53 +3468,53 @@ export default function App() {
       </div>
 
       {/* ─── FOOTER ─── */}
-      <footer className="bg-surface border-t border-border mt-16 pt-12 pb-8 text-left text-[11px] font-semibold text-ink-muted">
-        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+      <footer className="bg-surface border-t border-border mt-16 pt-12 pb-10 text-left text-xs font-medium text-ink-muted">
+        <div className="max-w-[1440px] xl:max-w-[1520px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {/* Col 1: Brand Info */}
           <div className="space-y-4">
-            <div className="flex items-center gap-2">
-              <div className="h-10 w-10 bg-white rounded-lg p-1 border border-border flex items-center justify-center overflow-hidden">
+            <div className="flex items-center gap-3">
+              <div className="h-11 w-11 bg-white rounded-xl p-1.5 border border-border flex items-center justify-center overflow-hidden shadow-2xs">
                 <img src="https://ibst.vn/templates/e4cms/images/icon/logo5.png" alt="Logo IBST" className="object-contain w-full h-full" />
               </div>
               <div>
-                <h4 className="font-black text-ink uppercase text-[10px] tracking-wide leading-tight">VIỆN KHCN XÂY DỰNG</h4>
-                <p className="text-[9px] text-ink-muted uppercase tracking-wider">BỘ XÂY DỰNG</p>
+                <h4 className="font-black text-ink uppercase text-xs tracking-wide leading-tight">VIỆN KHCN XÂY DỰNG (IBST)</h4>
+                <p className="text-[11px] font-bold text-amber-600 dark:text-amber-400 uppercase tracking-wider mt-0.5">BỘ XÂY DỰNG</p>
               </div>
             </div>
-            <p className="text-3xs text-ink-muted leading-relaxed font-medium">
+            <p className="text-xs text-ink-secondary leading-relaxed font-medium">
               Đơn vị Khoa học Công nghệ đầu ngành trong lĩnh vực xây dựng tại Việt Nam, phục vụ công tác QLNN của Bộ Xây dựng và cung cấp giải pháp kỹ thuật chất lượng cao.
             </p>
-            <div className="flex gap-2">
-              <span className="px-2 py-1 bg-muted border border-border text-[9px] font-extrabold rounded text-ink-secondary">VILAS 011</span>
-              <span className="px-2 py-1 bg-muted border border-border text-[9px] font-extrabold rounded text-ink-secondary">ISO 17025</span>
-              <span className="px-2 py-1 bg-muted border border-border text-[9px] font-extrabold rounded text-ink-secondary">LAS-XD</span>
+            <div className="flex flex-wrap gap-2">
+              <span className="px-2.5 py-1 bg-muted border border-border text-[11px] font-extrabold rounded-lg text-ink-secondary">VILAS 011</span>
+              <span className="px-2.5 py-1 bg-muted border border-border text-[11px] font-extrabold rounded-lg text-ink-secondary">ISO/IEC 17025</span>
+              <span className="px-2.5 py-1 bg-muted border border-border text-[11px] font-extrabold rounded-lg text-ink-secondary">LAS-XD</span>
             </div>
           </div>
 
           {/* Col 2: Addresses */}
           <div className="space-y-4 lg:col-span-2">
-            <h4 className="font-black text-ink uppercase text-[10px] tracking-wider border-b border-border-subtle pb-1">{lang === 'vi' ? 'Địa chỉ liên hệ' : 'Contact Addresses'}</h4>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-3xs font-medium leading-normal text-ink-muted">
-              <div className="space-y-2">
-                <p className="font-extrabold text-ink-secondary">{lang === 'vi' ? 'Trụ sở chính (Hà Nội):' : 'Main Headquarters (Hanoi):'}</p>
-                <p className="flex items-start gap-1.5"><MapPin size={12} className="text-primary-500 shrink-0 mt-0.5" /> <span>Số 81 phố Trần Cung, phường Nghĩa Đô, quận Cầu Giấy, Hà Nội</span></p>
-                <p className="flex items-center gap-1.5"><Phone size={12} className="text-primary-500 shrink-0" /> <span>024 37544196</span></p>
+            <h4 className="font-black text-ink uppercase text-xs tracking-wider border-b border-border-subtle pb-2">{lang === 'vi' ? 'Hệ thống Trụ sở & Phân viện' : 'Headquarters & Regional Branches'}</h4>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs font-medium leading-relaxed text-ink-muted">
+              <div className="space-y-1.5">
+                <p className="font-extrabold text-ink">{lang === 'vi' ? 'Trụ sở chính (Hà Nội):' : 'Main Headquarters (Hanoi):'}</p>
+                <p className="flex items-start gap-2"><MapPin size={14} className="text-primary-500 shrink-0 mt-0.5" /> <span>Số 81 phố Trần Cung, phường Nghĩa Đô, quận Cầu Giấy, Hà Nội</span></p>
+                <p className="flex items-center gap-2"><Phone size={14} className="text-primary-500 shrink-0" /> <span className="font-bold text-ink-secondary">024 3754 4196</span></p>
               </div>
-              <div className="space-y-2">
-                <p className="font-extrabold text-ink-secondary">{lang === 'vi' ? 'Phân viện Miền Nam (PVMN):' : 'Southern Branch (HCMC):'}</p>
-                <p className="flex items-start gap-1.5"><MapPin size={12} className="text-primary-500 shrink-0 mt-0.5" /> <span>Số 20/5B Quốc lộ 13, phường Hiệp Bình Phước, TP. Thủ Đức, TP. Hồ Chí Minh</span></p>
+              <div className="space-y-1.5">
+                <p className="font-extrabold text-ink">{lang === 'vi' ? 'Phân viện Miền Nam (PVMN):' : 'Southern Branch (HCMC):'}</p>
+                <p className="flex items-start gap-2"><MapPin size={14} className="text-primary-500 shrink-0 mt-0.5" /> <span>Số 20/5B Quốc lộ 13, phường Hiệp Bình Phước, TP. Thủ Đức, TP. Hồ Chí Minh</span></p>
               </div>
-              <div className="space-y-2">
-                <p className="font-extrabold text-ink-secondary">{lang === 'vi' ? 'Phân viện Miền Trung (PVMT):' : 'Central Branch (Hue/Da Nang):'}</p>
-                <p className="flex items-start gap-1.5"><MapPin size={12} className="text-primary-500 shrink-0 mt-0.5" /> <span>Số 183 Đường Phạm Văn Đồng, phường Vỹ Dạ, TP. Huế, tỉnh Thừa Thiên Huế</span></p>
+              <div className="space-y-1.5 md:col-span-2">
+                <p className="font-extrabold text-ink">{lang === 'vi' ? 'Phân viện Miền Trung (PVMT):' : 'Central Branch (Hue/Da Nang):'}</p>
+                <p className="flex items-start gap-2"><MapPin size={14} className="text-primary-500 shrink-0 mt-0.5" /> <span>Số 183 Đường Phạm Văn Đồng, phường Vỹ Dạ, TP. Huế, tỉnh Thừa Thiên Huế</span></p>
               </div>
             </div>
           </div>
 
           {/* Col 3: Fast access */}
           <div className="space-y-4 text-left">
-            <h4 className="font-black text-ink uppercase text-[10px] tracking-wider border-b border-border-subtle pb-1">{lang === 'vi' ? 'Liên kết nhanh' : 'Quick Links'}</h4>
-            <ul className="grid grid-cols-2 gap-2 text-3xs font-bold text-ink-secondary">
+            <h4 className="font-black text-ink uppercase text-xs tracking-wider border-b border-border-subtle pb-2">{lang === 'vi' ? 'Liên kết nhanh' : 'Quick Links'}</h4>
+            <ul className="grid grid-cols-2 gap-2.5 text-xs font-bold text-ink-secondary">
               <li><button onClick={() => handleTabChange('home')} className="hover:text-primary-500 transition-colors cursor-pointer">Trang chủ</button></li>
               <li><button onClick={() => handleTabChange('intro', 'nhiem-vu')} className="hover:text-primary-500 transition-colors cursor-pointer">Nhiệm vụ</button></li>
               <li><button onClick={() => handleTabChange('intro', 'co-cau')} className="hover:text-primary-500 transition-colors cursor-pointer">Tổ chức</button></li>
@@ -3392,17 +3522,16 @@ export default function App() {
               <li><button onClick={() => handleTabChange('news')} className="hover:text-primary-500 transition-colors cursor-pointer">Tin tức</button></li>
               <li><button onClick={() => handleTabChange('state-gov')} className="hover:text-primary-500 transition-colors cursor-pointer">QLNN</button></li>
               <li><button onClick={() => handleTabChange('research')} className="hover:text-primary-500 transition-colors cursor-pointer">Nghiên cứu</button></li>
+              <li><button onClick={() => handleTabChange('faq')} className="hover:text-primary-500 transition-colors cursor-pointer">Hỏi - Đáp</button></li>
             </ul>
           </div>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4 mt-10 pt-4 border-t border-border-subtle text-center text-3xs font-semibold leading-relaxed text-ink-muted">
-          © 2026 Viện Khoa học Công nghệ Xây dựng (IBST). Bảo lưu mọi quyền. Độc lập - Chuyên nghiệp - Tin cậy.<br/>
-          Cổng thông tin được hỗ trợ kỹ thuật bởi CIC - MOC.
+        <div className="max-w-[1440px] xl:max-w-[1520px] 2xl:max-w-[1600px] mx-auto px-4 sm:px-6 lg:px-8 mt-10 pt-5 border-t border-border-subtle text-center text-xs font-semibold leading-relaxed text-ink-muted">
+          © 2026 Viện Khoa học Công nghệ Xây dựng (IBST) — Bộ Xây dựng. Bảo lưu mọi quyền. Độc lập - Chuyên nghiệp - Tin cậy.<br/>
+          Cổng thông tin được phát triển & hỗ trợ kỹ thuật bởi CIC - MOC.
         </div>
       </footer>
-
-
 
       {/* ─── MODAL: MỤC LỤC CHI TIẾT TẠP CHÍ ─── */}
       {journalModalOpen && selectedJournal && (
@@ -3410,36 +3539,36 @@ export default function App() {
           <div className="bg-surface border border-border shadow-dropdown rounded-2xl max-w-lg w-full p-6 text-left space-y-4">
             <div className="flex justify-between items-start border-b border-border-subtle pb-3">
               <div className="space-y-1">
-                <span className="px-2 py-0.5 rounded text-[8px] font-black uppercase bg-primary-500/10 text-primary-500 border border-primary-500/10">
+                <span className="px-2.5 py-0.5 rounded-md text-[11px] font-black uppercase bg-primary-500/15 text-primary-500 border border-primary-500/20">
                   {selectedJournal.volume}
                 </span>
-                <h3 className="font-extrabold text-sm text-ink mt-1">
+                <h3 className="font-extrabold text-base text-ink mt-1.5">
                   {lang === 'vi' ? 'Mục lục Tạp chí Khoa học Công nghệ Xây dựng' : 'Scientific Journal Table of Contents'}
                 </h3>
               </div>
               <button 
                 onClick={() => setJournalModalOpen(false)}
-                className="text-ink-muted hover:text-ink text-xs font-bold px-2 py-1 rounded bg-muted cursor-pointer"
+                className="text-ink-muted hover:text-ink text-xs font-bold px-2.5 py-1.5 rounded-lg bg-muted cursor-pointer"
               >
                 ✕
               </button>
             </div>
 
-            <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1">
+            <div className="space-y-3 max-h-[340px] overflow-y-auto pr-1">
               {selectedJournal.articles.map((art: any, i: number) => (
-                <div key={i} className="p-3 bg-muted/40 border border-border rounded-xl space-y-1 text-2xs font-semibold">
-                  <div className="flex items-start gap-2">
-                    <span className="w-5 h-5 rounded-full bg-primary-500/10 text-primary-500 flex items-center justify-center text-[10px] font-black flex-shrink-0 mt-0.5">{i+1}</span>
+                <div key={i} className="p-3.5 bg-muted/40 border border-border rounded-xl space-y-2 text-xs font-semibold">
+                  <div className="flex items-start gap-2.5">
+                    <span className="w-6 h-6 rounded-full bg-primary-500/15 text-primary-500 flex items-center justify-center text-xs font-black flex-shrink-0 mt-0.5">{i+1}</span>
                     <div className="space-y-1 min-w-0">
                       <p className="text-ink font-bold leading-snug">{art.title}</p>
-                      <p className="text-[9px] text-ink-muted italic">{lang === 'vi' ? 'Tác giả: ' : 'Authors: '}{art.authors}</p>
+                      <p className="text-[11px] text-ink-muted italic">{lang === 'vi' ? 'Tác giả: ' : 'Authors: '}{art.authors}</p>
                     </div>
                   </div>
                   <div className="pt-2 border-t border-border-subtle flex justify-end">
                     <a 
                       href="#" 
                       onClick={(e) => { e.preventDefault(); alert(lang === 'vi' ? 'Bắt đầu tải file tóm tắt PDF...' : 'Downloading PDF Abstract...'); }}
-                      className="px-2.5 py-1 rounded bg-primary-500 text-white font-extrabold text-[8px] hover:bg-primary-600 shadow-sm transition-colors"
+                      className="px-3 py-1.5 rounded-lg bg-primary-500 text-white font-extrabold text-[11px] hover:bg-primary-600 shadow-xs transition-colors"
                     >
                       {lang === 'vi' ? 'Tải tóm tắt (Abstract.pdf)' : 'Download Abstract'}
                     </a>
@@ -3448,7 +3577,7 @@ export default function App() {
               ))}
             </div>
 
-            <div className="pt-3 border-t border-border-subtle flex justify-between items-center text-[10px] font-semibold text-ink-muted">
+            <div className="pt-3 border-t border-border-subtle flex justify-between items-center text-xs font-semibold text-ink-muted">
               <span>{selectedJournal.issn} • IBST Publishing</span>
               <span>{selectedJournal.date}</span>
             </div>
@@ -3462,31 +3591,31 @@ export default function App() {
           <div className="bg-surface border border-border shadow-dropdown rounded-2xl max-w-md w-full p-6 text-left space-y-4">
             <div className="flex justify-between items-start border-b border-border-subtle pb-3">
               <div className="space-y-1">
-                <span className="text-[9px] text-primary-500 font-black uppercase tracking-wider block">Gửi câu hỏi tới chuyên gia</span>
-                <h3 className="font-extrabold text-sm text-ink mt-0.5">
+                <span className="text-[11px] text-primary-500 font-black uppercase tracking-wider block">Gửi câu hỏi tới chuyên gia</span>
+                <h3 className="font-extrabold text-base text-ink mt-0.5">
                   {consultingExpert.name}
                 </h3>
               </div>
               <button 
                 onClick={() => setConsultingExpert(null)}
-                className="text-ink-muted hover:text-ink text-xs font-bold px-2 py-1 rounded bg-muted cursor-pointer"
+                className="text-ink-muted hover:text-ink text-xs font-bold px-2.5 py-1.5 rounded-lg bg-muted cursor-pointer"
               >
                 ✕
               </button>
             </div>
 
             {expertMessageSent ? (
-              <div className="p-6 bg-success/5 border border-success/10 rounded-xl text-center space-y-3 animate-fade-in">
-                <span className="w-12 h-12 rounded-full bg-success-500/10 text-success-500 flex items-center justify-center text-xl font-bold mx-auto">✓</span>
-                <h4 className="font-bold text-xs text-ink">{lang === 'vi' ? 'Gửi câu hỏi thành công!' : 'Question Submitted Successfully!'}</h4>
-                <p className="text-3xs text-ink-secondary leading-relaxed font-semibold">
+              <div className="p-6 bg-success-500/10 border border-success-500/20 rounded-xl text-center space-y-3 animate-fade-in">
+                <span className="w-12 h-12 rounded-full bg-success-500/15 text-success-500 flex items-center justify-center text-xl font-bold mx-auto">✓</span>
+                <h4 className="font-bold text-sm text-ink">{lang === 'vi' ? 'Gửi câu hỏi thành công!' : 'Question Submitted Successfully!'}</h4>
+                <p className="text-xs text-ink-secondary leading-relaxed font-medium">
                   {lang === 'vi'
                     ? 'Hệ thống đã chuyển tiếp câu hỏi đến email của chuyên gia. Câu trả lời sẽ gửi về email của bạn trong thời gian sớm nhất.'
                     : 'Your question has been forwarded to the expert. An answer will be sent back to your email shortly.'}
                 </p>
                 <button
                   onClick={() => setConsultingExpert(null)}
-                  className="px-4 py-1.5 bg-primary-500 text-white rounded-lg text-3xs font-extrabold shadow-sm hover:bg-primary-600 transition-colors"
+                  className="px-4 py-2 bg-primary-500 text-white rounded-xl text-xs font-extrabold shadow-xs hover:bg-primary-600 transition-colors cursor-pointer"
                 >
                   {lang === 'vi' ? 'Đóng cửa sổ' : 'Close'}
                 </button>
@@ -3501,41 +3630,41 @@ export default function App() {
                     alert(lang === 'vi' ? 'Vui lòng nhập đầy đủ thông tin!' : 'Please fill in all fields!');
                   }
                 }}
-                className="space-y-3"
+                className="space-y-3.5"
               >
-                <div className="space-y-1">
-                  <label className="text-[9px] font-black text-ink-muted uppercase block">{lang === 'vi' ? 'Email của bạn' : 'Your Email'}</label>
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-black text-ink-muted uppercase block">{lang === 'vi' ? 'Email của bạn' : 'Your Email'}</label>
                   <input 
                     type="email" 
                     required
                     value={expertEmail}
                     onChange={(e) => setExpertEmail(e.target.value)}
                     placeholder="example@domain.com"
-                    className="w-full p-2.5 text-2xs rounded-lg border border-border bg-muted/30 font-semibold focus:outline-none focus:border-primary"
+                    className="w-full p-2.5 text-xs rounded-xl border border-border bg-muted/40 font-semibold focus:outline-none focus:border-primary"
                   />
                 </div>
-                <div className="space-y-1">
-                  <label className="text-[9px] font-black text-ink-muted uppercase block">{lang === 'vi' ? 'Nội dung câu hỏi tư vấn' : 'Consultation Question'}</label>
+                <div className="space-y-1.5">
+                  <label className="text-[11px] font-black text-ink-muted uppercase block">{lang === 'vi' ? 'Nội dung câu hỏi tư vấn' : 'Consultation Question'}</label>
                   <textarea 
                     rows={4}
                     required
                     value={expertQuestion}
                     onChange={(e) => setExpertQuestion(e.target.value)}
                     placeholder={lang === 'vi' ? 'Nhập câu hỏi của bạn về tiêu chuẩn, giải pháp kết cấu hoặc vật liệu...' : 'Enter your technical query...'}
-                    className="w-full p-2.5 text-2xs rounded-lg border border-border bg-muted/30 font-semibold focus:outline-none focus:border-primary resize-none"
+                    className="w-full p-2.5 text-xs rounded-xl border border-border bg-muted/40 font-semibold focus:outline-none focus:border-primary resize-none"
                   />
                 </div>
                 <div className="pt-2 flex justify-end gap-2">
                   <button 
                     type="button"
                     onClick={() => setConsultingExpert(null)}
-                    className="px-4 py-2 rounded-lg bg-muted text-ink-secondary font-extrabold text-3xs hover:bg-border transition-colors cursor-pointer"
+                    className="px-4 py-2 rounded-xl bg-muted text-ink-secondary font-extrabold text-xs hover:bg-border transition-colors cursor-pointer"
                   >
                     {lang === 'vi' ? 'Hủy' : 'Cancel'}
                   </button>
                   <button 
                     type="submit"
-                    className="px-4 py-2 rounded-lg bg-primary-500 text-white font-extrabold text-3xs hover:bg-primary-600 transition-colors shadow-sm cursor-pointer"
+                    className="px-4 py-2 rounded-xl bg-primary-500 text-white font-extrabold text-xs hover:bg-primary-600 transition-colors shadow-xs cursor-pointer"
                   >
                     {lang === 'vi' ? 'Gửi chuyên gia' : 'Submit to Expert'}
                   </button>
@@ -3546,7 +3675,7 @@ export default function App() {
         </div>
       )}
       
-      <Chatbot />
+      <QuickMenu lang={lang} activeTab={activeTab} onNavigate={handleTabChange} />
     </div>
   );
 }
